@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShootTheDead.GameEntities
+namespace ShootTheDead.GameEntities.Guns
 {
-   class Enemy
-   {
-        
+    public class Rifle
+    {
+        public Rifle() 
+        {
 
-   }
+        }
+
+    }
 }

@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
+using ShootTheDead.GameEntities;
+using ShootTheDead.GameEntities.Guns;
 
 namespace ShootTheDead
 {
@@ -9,9 +11,16 @@ namespace ShootTheDead
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
         public bool Reloading { get; protected set; }
-        private float Speed = 300;
+        private float Speed = 260;
+        int fireRate = 15;
+        public int hp = 100;
+        public static bool inGame = false;
+        public static bool MouseLeftDown { get; private set; }
+        public Gun Gun { get; private set; }
+        private Gun _weapon1;
+        private Gun _weapon2;
 
-        public Player(Vector2 position) : base(position)
+        public Player(Vector2 pos) : base(pos)
         {
             framesPerSecond = 10;
         }
@@ -48,14 +57,17 @@ namespace ShootTheDead
             // Calcula a rotação em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
 
-            /*if (cooldownLeft > 0)
+            if(hp <= 0)
             {
-                cooldownLeft -= TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                inGame = false;
             }
-            else if (Reloading)
+            if (cooldownLeft > 0)
+                cooldownLeft--;
+            if (MouseLeftDown)
             {
-                Reloading = false;
-            }*/
+                
+            }
+
 
             base.Update(gameTime);
         }
@@ -82,7 +94,7 @@ namespace ShootTheDead
 
         public void SwapWeapon()
         {
-            //Gun = (Gun == _weapon1) ? _weapon2 : _weapon1;
+            Gun = (Gun == _weapon1) ? _weapon2 : _weapon1;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

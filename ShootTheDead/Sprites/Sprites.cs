@@ -1,15 +1,6 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ShootTheDead
 {
-    public abstract class Sprite
+    public abstract class Sprite 
     {
         public Vector2 sPosition;
         public Texture2D sTexture;
@@ -21,14 +12,15 @@ namespace ShootTheDead
 
 
 
+
         public int framesPerSecond
         {
             set { timeToUpdate = (1f / value); }
         }
 
-        public Sprite(Vector2 position)
+        public Sprite(Vector2 pos)
         {
-            sPosition = position;
+            sPosition = pos;
         }
 
         public void AddAnimation(int frames)
