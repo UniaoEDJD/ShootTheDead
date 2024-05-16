@@ -1,4 +1,5 @@
 ﻿using ShootTheDead.Main;
+using System.Diagnostics;
 
 namespace ShootTheDead
 {
@@ -23,7 +24,6 @@ namespace ShootTheDead
         private State _nextState;
         private Texture2D[] textures = new Texture2D[20];
         private Texture2D backgroundTexture;
-        private Player _player;
         public Matrix _screenScaleMatrix;
         private bool _isResizing;
         private Viewport _viewport;
@@ -82,6 +82,11 @@ namespace ShootTheDead
             updateScreenScaleMatrix();
             xxyy = new Rectangle[10];
             map.LoadMap("level1.txt");
+            player = new Player(new Vector2(300, 300));
+            foreach (var o in map.tiles)
+            {
+                map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, tilSize, tilSize));
+            }
             base.Initialize();
         }
 
@@ -91,12 +96,12 @@ namespace ShootTheDead
             backgroundTexture = Content.Load<Texture2D>("background");
             spriteBatch = new SpriteBatch(GraphicsDevice);
             textures[0] = getTexture("tiles");
-            xxyy[0] = new Rectangle(384, 320, tilSize / 3, tilSize / 3);
-            xxyy[1] = new Rectangle(0, 768, tilSize / 3, tilSize / 3);
-            xxyy[2] = new Rectangle(256, 192, tilSize / 3, tilSize / 3);
-            xxyy[3] = new Rectangle(512, 576, tilSize / 3, tilSize / 3);
+            xxyy[0] = new Rectangle(384, 320, tilSize, tilSize);
+            xxyy[1] = new Rectangle(0, 768, tilSize, tilSize);
+            xxyy[2] = new Rectangle(256, 192, tilSize, tilSize);
+            xxyy[3] = new Rectangle(512, 576, tilSize, tilSize);
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-            player = new Player(new Vector2(100, 100));
+
             player.LoadContent(Content);
         }
 
@@ -107,15 +112,28 @@ namespace ShootTheDead
             //      _currentState = _nextState;
             //      _nextState = null;
             //  }
-            player.Update(gameTime);
+            
             // _currentState.Update(gameTime);
             //  _currentState.PostUpdate(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            var xr = 0;
             // Atualiza o player
-
+            var prevPos = player.sPosition;
+            player.Update(gameTime);
+            foreach (var rect in map.colliders)
+            {
+                
+                
+                if (player.playerRect.Intersects(rect))
+             {
+                    player.sPosition = prevPos;
+                    xr++;
+                    Debug.WriteLine($"Colisão\n agane {xr}");
+             }
+            }
 
             base.Update(gameTime);
         }
@@ -128,9 +146,9 @@ namespace ShootTheDead
             GraphicsDevice.Viewport = _viewport;
 
             // Desenha o background e o mapa
-            for (int i = 0; i < GAME_WIDTH; i += tilSize / 3)
+            for (int i = 0; i < GAME_WIDTH; i += tilSize)
             {
-                for (int j = 0; j < GAME_HEIGHT; j += tilSize / 3)
+                for (int j = 0; j < GAME_HEIGHT; j += tilSize)
                 {
                     spriteBatch.Draw(textures[0], new Vector2(i, j), xxyy[2], Color.White);
                 }

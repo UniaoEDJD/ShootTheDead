@@ -8,7 +8,7 @@ namespace ShootTheDead
         private double TimeElapsed;
         private double timeToUpdate;
         public int frameIndex;
-        protected Vector2 sDirection = Vector2.Zero;
+        
 
 
 

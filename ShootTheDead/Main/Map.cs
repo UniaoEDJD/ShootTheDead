@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace ShootTheDead.Main
 {
@@ -12,23 +13,41 @@ namespace ShootTheDead.Main
         public int Height, Width;
         public char[,] map;
         public int tileSize = 64;
-        public List<Point> tiles;
+        public List<Vector2> tiles;
+        public List<Rectangle> colliders;
+
 
         public void LoadMap(string levelFile)
         {
-            tiles = new List<Point>();
+            tiles = new List<Vector2>();
+            colliders = new List<Rectangle>();
             string[] linhas = File.ReadAllLines($"Content/{levelFile}");
             int lineCount = linhas.Length;
             int colCount = linhas[0].Length;
+            Vector2 position = new Vector2();
 
             map = new char[colCount, lineCount];
             for (int x = 0; x < colCount; x++)
             {
                 for (int y = 0; y < lineCount; y++)
                 {
-                    map[x, y] = linhas[y][x];
+                    position.X = x * tileSize;
+                    position.Y = y * tileSize;
+
+                    if (linhas[y][x] == '1')
+                    {
+                        map[x, y] = linhas[y][x];
+                        tiles.Add(new Vector2(position.X, position.Y));
+                        Debug.WriteLine($"Tile: {x}, {y}");
+                    }
+                    else
+                    {
+                        map[x, y] = linhas[y][x];
+                    }   
                 }
             }
+
+
 
         }
 
@@ -41,8 +60,8 @@ namespace ShootTheDead.Main
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    position.X = x * tileSize / 3;
-                    position.Y = y * tileSize / 3;
+                    position.X = x * tileSize;
+                    position.Y = y * tileSize;
                     switch (map[x, y])
                     {
                         case '0':
