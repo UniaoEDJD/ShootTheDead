@@ -9,11 +9,11 @@ namespace ShootTheDead
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
         public bool Reloading { get; protected set; }
-        private float Speed = 1000;
+        private float Speed = 300;
 
         public Player(Vector2 position) : base(position)
         {
-
+            framesPerSecond = 10;
         }
 
         public void Reset()
@@ -25,7 +25,7 @@ namespace ShootTheDead
 
         public void LoadContent(ContentManager content)
         {
-            sTexture = content.Load<Texture2D>("survivor-reload_handgun_0");
+            sTexture = content.Load<Texture2D>("survivor-move_handgun");
             AddAnimation(20);
         }
 
@@ -91,10 +91,10 @@ namespace ShootTheDead
             spriteBatch.Draw(
                 sTexture,
                 sPosition,
-                sRectangles,
+                sRectangles[frameIndex],
                 Color.White,
                 rotation,  // Aplica a rotação
-                new Vector2(sRectangles.Width / 2, sRectangles.Height / 2),  // Origem da rotação
+                new Vector2(sRectangles[frameIndex].Width / 2, sRectangles[frameIndex].Height / 2),  // Origem da rotação
                 1.0f,
                 SpriteEffects.None,
                 0f

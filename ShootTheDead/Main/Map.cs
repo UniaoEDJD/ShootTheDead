@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ShootTheDead.Main
 {
-    public class MapLevel
+    public class Map
     {
         public int Height, Width;
         public char[,] map;

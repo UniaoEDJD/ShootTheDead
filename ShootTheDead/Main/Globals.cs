@@ -1,4 +1,5 @@
 global using System;
+global using Microsoft.VisualBasic;
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
