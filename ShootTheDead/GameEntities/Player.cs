@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShootTheDead.Main;
 
 namespace ShootTheDead
 {
@@ -9,11 +11,17 @@ namespace ShootTheDead
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
         public bool Reloading { get; protected set; }
-        private float Speed = 300;
+        private float Speed = 240;
+        public Rectangle playerRect;
+        private Map map = new Map();
+       
+
 
         public Player(Vector2 position) : base(position)
         {
             framesPerSecond = 10;
+
+            playerRect = new Rectangle((int)position.X, (int)position.Y, 16, 16);
         }
 
         public void Reset()
@@ -25,18 +33,25 @@ namespace ShootTheDead
 
         public void LoadContent(ContentManager content)
         {
+
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
             AddAnimation(20);
         }
 
         public override void Update(GameTime gameTime)
         {
-            sDirection = Vector2.Zero;
-            HandleInput(Keyboard.GetState());
+            
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            sDirection *= Speed;
-            sPosition += sDirection * deltaTime;
+            HandleInput(Keyboard.GetState(), gameTime);
+
+            
+
+            
+            
+          
+            
+
+
 
             // Obtém a posição do mouse
             MouseState mouseState = Mouse.GetState();
@@ -47,6 +62,8 @@ namespace ShootTheDead
 
             // Calcula a rotação em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
+
+
 
             /*if (cooldownLeft > 0)
             {
@@ -60,24 +77,28 @@ namespace ShootTheDead
             base.Update(gameTime);
         }
 
-        public void HandleInput(KeyboardState keyState)
+        public void HandleInput(KeyboardState keyState, GameTime gameTime)
         {
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (keyState.IsKeyDown(Keys.W))
             {
-                sDirection += new Vector2(0, -1);
+                sPosition.Y -= Speed * deltaTime;
             }
             if (keyState.IsKeyDown(Keys.A))
             {
-                sDirection += new Vector2(-1, 0);
+                sPosition.X -= Speed * deltaTime;
             }
             if (keyState.IsKeyDown(Keys.S))
             {
-                sDirection += new Vector2(0, 1);
+                sPosition.Y += Speed * deltaTime;
             }
             if (keyState.IsKeyDown(Keys.D))
             {
-                sDirection += new Vector2(1, 0);
+                sPosition.X += Speed * deltaTime;
             }
+            playerRect.X = (int)sPosition.X;
+            playerRect.Y = (int)sPosition.Y;
         }
 
         public void SwapWeapon()
