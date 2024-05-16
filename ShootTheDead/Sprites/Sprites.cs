@@ -19,10 +19,6 @@ namespace ShootTheDead
         public int frameIndex;
         protected Vector2 sDirection = Vector2.Zero;
 
-
-
-
-
         public Sprite(Vector2 position)
         {
             sPosition = position;

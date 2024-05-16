@@ -6,7 +6,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     public static int  ScreenHeight;
     public static int ScreenWidth;
-    private Camera _camera;
     private List<Component> _components;
     private Player _player;
     Texture2D background;
@@ -43,7 +42,6 @@ public class Game1 : Game
         _components = new List<Component>();
          background = Content.Load<Texture2D>("background");
         _player = new Player(new Vector2(100, 100));
-        _camera = new Camera();
         _player.LoadContent(Content);
 
 
@@ -59,7 +57,6 @@ public class Game1 : Game
         //  }
 
         _player.Update(gameTime);
-        _camera.Follow(_player);
 
 
 
@@ -70,9 +67,9 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        _spriteBatch.Begin();
 
-        _spriteBatch.Begin(transformMatrix: _camera.Transform);
+        GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Draw(background, Vector2.Zero, Color.White);
 
