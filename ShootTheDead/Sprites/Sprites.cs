@@ -1,28 +1,55 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace ShootTheDead
 {
-    public class Sprite : Component
-
+    public abstract class Sprite
     {
-        protected Texture2D _texture;
-        public Vector2 Position { get; set; }
+        public Vector2 sPosition;
+        public Texture2D sTexture;
+        public Rectangle sRectangles;
+        private double TimeElapsed;
+        private double timeToUpdate;
+        public int frameIndex;
+        protected Vector2 sDirection = Vector2.Zero;
 
-        public Rectangle Rectangle
+
+
+
+
+        public Sprite(Vector2 position)
         {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height); }
+            sPosition = position;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void AddAnimation(int frames)
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            int width = sTexture.Width;
+            sRectangles = new Rectangle();
+            for (int i = 0; i < frames; i++)
+ 
+                sRectangles = new Rectangle(0, 0, width, sTexture.Height);
+
         }
 
-        public Sprite(Texture2D texture)
+        public virtual void Update(GameTime gameTime)
         {
-            _texture = texture;
+            TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public override void Update(GameTime gameTime)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(sTexture,
+            sPosition,
+            sRectangles,
+            Color.White);
         }
+
     }
 }

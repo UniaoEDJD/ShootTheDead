@@ -9,11 +9,19 @@ public class Game1 : Game
     private Camera _camera;
     private List<Component> _components;
     private Player _player;
+    Texture2D background;
+    private State _nextState;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+    }
+
+    public void ChangeState(State state)
+    {
+        _nextState = state;
     }
 
     protected override void Initialize()
@@ -32,28 +40,31 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        _components = new List<Component>();
+         background = Content.Load<Texture2D>("background");
+        _player = new Player(new Vector2(100, 100));
         _camera = new Camera();
-        _player = new Player(Content.Load<Texture2D>("survivor-reload_handgun_0"));
-        _components = new List<Component>()
-        {
-            new Sprite(Content.Load<Texture2D>("background")),
-            _player
-        };
+        _player.LoadContent(Content);
+
 
         // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
     {
+        // if (_nextState != null)
+        // {
+        //      _currentState = _nextState;
+        //      _nextState = null;
+        //  }
+
+        _player.Update(gameTime);
+        _camera.Follow(_player);
+
+
+
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        foreach (var component in _components)
-            component.Update(gameTime);
-        
-        _camera.Follow(_player);
-        
-
         base.Update(gameTime);
     }
 
@@ -63,9 +74,10 @@ public class Game1 : Game
 
         _spriteBatch.Begin(transformMatrix: _camera.Transform);
 
-        foreach (var component in _components)
-            component.Draw(gameTime, _spriteBatch);
+        _spriteBatch.Draw(background, Vector2.Zero, Color.White);
 
+        _player.Draw(_spriteBatch);
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
