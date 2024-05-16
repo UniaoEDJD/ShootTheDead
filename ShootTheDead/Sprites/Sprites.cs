@@ -1,6 +1,8 @@
+using static System.Net.Mime.MediaTypeNames;
+
 namespace ShootTheDead
 {
-    public abstract class Sprite 
+    public abstract class Sprite (Vector2 pos, Texture2D tex)
     {
         public Vector2 sPosition;
         public Texture2D sTexture;
@@ -8,20 +10,19 @@ namespace ShootTheDead
         private double TimeElapsed;
         private double timeToUpdate;
         public int frameIndex;
-        
-
-
-
+        public float Rotation { get; set; }
+        protected readonly Vector2 origin = new(tex.Width /2, tex.Height / 2);
 
         public int framesPerSecond
         {
             set { timeToUpdate = (1f / value); }
         }
-
-        public Sprite(Vector2 pos)
+        
+        public virtual void Initialize()
         {
             sPosition = pos;
         }
+        
 
         public void AddAnimation(int frames)
         {
@@ -57,7 +58,7 @@ namespace ShootTheDead
             spriteBatch.Draw(sTexture,
             sPosition,
             sRectangles[frameIndex],
-            Color.White);
+            Color.White, Rotation, new Vector2 (300, 300), 1f, SpriteEffects.None, 1);
         }
 
     }

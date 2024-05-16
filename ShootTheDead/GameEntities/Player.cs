@@ -11,13 +11,13 @@ namespace ShootTheDead
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
         public bool Reloading { get; protected set; }
-        private float Speed = 240;
+        private float Speed = 300;
         public Rectangle playerRect;
         private Map map = new Map();
        
 
 
-        public Player(Vector2 position) : base(position)
+        public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
             framesPerSecond = 10;
 
@@ -33,9 +33,9 @@ namespace ShootTheDead
 
         public void LoadContent(ContentManager content)
         {
-
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
             AddAnimation(20);
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -43,15 +43,6 @@ namespace ShootTheDead
             
 
             HandleInput(Keyboard.GetState(), gameTime);
-
-            
-
-            
-            
-          
-            
-
-
 
             // Obtém a posição do mouse
             MouseState mouseState = Mouse.GetState();
@@ -74,7 +65,7 @@ namespace ShootTheDead
             if (MouseLeftDown)
             {
                 
-            }
+            }*/
 
 
             base.Update(gameTime);
@@ -106,7 +97,7 @@ namespace ShootTheDead
 
         public void SwapWeapon()
         {
-            Gun = (Gun == _weapon1) ? _weapon2 : _weapon1;
+            //Gun = (Gun == _weapon1) ? _weapon2 : _weapon1;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

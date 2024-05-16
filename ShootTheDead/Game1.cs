@@ -73,6 +73,7 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            Texture2D text = (Content.Load<Texture2D>("background"));
             graphics.PreferredBackBufferWidth = GAME_WIDTH;
             graphics.PreferredBackBufferHeight = GAME_HEIGHT;
             graphics.ApplyChanges();
@@ -82,7 +83,7 @@ namespace ShootTheDead
             updateScreenScaleMatrix();
             xxyy = new Rectangle[10];
             map.LoadMap("level1.txt");
-            player = new Player(new Vector2(300, 300));
+            player = new Player(new Vector2(300, 300), text);
             foreach (var o in map.tiles)
             {
                 map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, tilSize, tilSize));
