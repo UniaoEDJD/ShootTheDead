@@ -20,8 +20,41 @@ namespace ShootTheDead
         public static SpriteBatch SpriteBatch { get; set; }
         public static int GAME_WIDTH = 1920;
         public static int GAME_HEIGHT = 1080;
+        private static int _virtualWidth = 1920;
+        private static int _virtualHeight = 1080;
+        public static Viewport _viewport;
+        public static Matrix _screenScaleMatrix;
 
+        public static void updateScreenScaleMatrix(GraphicsDevice graphicsDevice)
+        {
+            float screenHeight = graphicsDevice.PresentationParameters.BackBufferHeight;
+            float screenWidth = graphicsDevice.PresentationParameters.BackBufferWidth;
 
+            if (screenWidth / _virtualWidth > screenHeight / _virtualHeight)
+            {
+                float aspect = screenHeight / GAME_HEIGHT;
+                _virtualWidth = (int)(aspect * GAME_WIDTH);
+                _virtualHeight = (int)screenHeight;
+            }
+            else
+            {
+                float aspect = screenWidth / GAME_WIDTH;
+                _virtualWidth = (int)screenWidth;
+                _virtualHeight = (int)(aspect * GAME_HEIGHT);
+            }
+
+            _screenScaleMatrix = Matrix.CreateScale(_virtualWidth / (float)GAME_WIDTH);
+
+            _viewport = new Viewport
+            {
+                X = (int)(screenWidth / 2 - _virtualWidth / 2),
+                Y = (int)(screenHeight / 2 - _virtualHeight / 2),
+                Width = _virtualWidth,
+                Height = _virtualHeight,
+                MinDepth = 0,
+                MaxDepth = 1
+            };
+        }
 
     }
 }

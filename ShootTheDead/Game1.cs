@@ -18,13 +18,12 @@ namespace ShootTheDead
         Texture2D[] runningTextures;
         int counter;
         int activeframe;
-        private int _virtualWidth = 1920;
-        private int _virtualHeight = 1080;
+
         private State _currentState;
         private State _nextState;
-        public Matrix _screenScaleMatrix;
+        
         private bool _isResizing;
-        private Viewport _viewport;
+        
         MapManager mapManager;
         Player player;
         Enemy enemy;
@@ -55,7 +54,7 @@ namespace ShootTheDead
             if (!_isResizing && Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0)
             {
                 _isResizing = true;
-                updateScreenScaleMatrix();
+                Globals.updateScreenScaleMatrix(GraphicsDevice);
                 _isResizing = false;
             }
         }
@@ -82,7 +81,7 @@ namespace ShootTheDead
             mapManager.Initialize();
             // Adiciona o serviço SpriteBatch ao serviço de gráficos do jogo
             Services.AddService(spriteBatch);
-            updateScreenScaleMatrix();
+            Globals.updateScreenScaleMatrix(GraphicsDevice);
             
             
             player = new Player(new Vector2(300, 300), text);
@@ -130,10 +129,10 @@ namespace ShootTheDead
 
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(transformMatrix: _screenScaleMatrix); // Use a transformação da câmera, se necessário
+            spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
             GraphicsDevice.Clear(Color.Black);
 
-            GraphicsDevice.Viewport = _viewport;
+            GraphicsDevice.Viewport = Globals._viewport;
 
             // Desenha o background e o mapa
             mapManager.Draw(spriteBatch);
@@ -148,35 +147,6 @@ namespace ShootTheDead
         }
 
 
-        private void updateScreenScaleMatrix()
-        {
-            float screenHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
-            float screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
 
-            if (screenWidth / _virtualWidth > screenHeight / _virtualHeight)
-            {
-                float aspect = screenHeight / Globals.GAME_HEIGHT;
-                _virtualWidth = (int)(aspect * Globals.GAME_WIDTH);
-                _virtualHeight = (int)screenHeight;
-            }
-            else
-            {
-                float aspect = screenWidth / Globals.GAME_WIDTH;
-                _virtualWidth = (int)screenWidth;
-                _virtualHeight = (int)(aspect * Globals.GAME_HEIGHT);
-            }
-
-            _screenScaleMatrix = Matrix.CreateScale(_virtualWidth / (float)Globals.GAME_WIDTH);
-
-            _viewport = new Viewport
-            {
-                X = (int)(screenWidth / 2 - _virtualWidth / 2),
-                Y = (int)(screenHeight / 2 - _virtualHeight / 2),
-                Width = _virtualWidth,
-                Height = _virtualHeight,
-                MinDepth = 0,
-                MaxDepth = 1
-            };
-        }
     }
 }
