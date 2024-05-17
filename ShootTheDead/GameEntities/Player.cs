@@ -15,7 +15,8 @@ namespace ShootTheDead
         public Rectangle playerRect;
         private Map map = new Map();
         private bool isMoving;
-       
+        public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
+        private Texture2D bulletTexture;
 
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
@@ -25,25 +26,25 @@ namespace ShootTheDead
             playerRect = new Rectangle((int)position.X, (int)position.Y, 16, 16);
         }
 
-        public void Reset()
-        {
-            //_weapon1 = new Pistol();
-            //_weapon2 = new Rifle();
-            //IsDead = false;
-        }
-
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
-            //sTexture = content.Load<Texture2D>("survivor-walk_");
+            bulletTexture = content.Load<Texture2D>("bullet");
             AddAnimation(20);
-            base.Initialize();
+            Initialize();
+        }
+
+        public void Shoot()
+        {
+            Vector2 bulletPosition = sPosition;
+            Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+            Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
+            Bullets.Add(newBullet);
         }
 
         public override void Update(GameTime gameTime)
         {
             HandleInput(Keyboard.GetState(), gameTime);
-
             // Obtém a posição do mouse
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
@@ -53,17 +54,15 @@ namespace ShootTheDead
 
             // Calcula a rotação em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
-
-            /*if (cooldownLeft > 0)
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) // Pressione a barra de espaço para atirar
             {
-                inGame = false;
+                Shoot();
             }
-            if (cooldownLeft > 0)
-                cooldownLeft--;
-            if (MouseLeftDown)
+
+            foreach (var bullet in Bullets)
             {
-                
-            }*/
+                bullet.Update(gameTime);
+            }
 
             if (isMoving)
             {
@@ -120,6 +119,10 @@ namespace ShootTheDead
                 SpriteEffects.None,
                 0f
             );
+            foreach (var bullet in Bullets)
+            {
+                bullet.Draw(spriteBatch);
+            }
         }
     }
 }

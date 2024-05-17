@@ -125,15 +125,13 @@ namespace ShootTheDead
             var prevPos = player.sPosition;
             player.Update(gameTime);
             foreach (var rect in map.colliders)
-            {
-                
-                
+            {  
                 if (player.playerRect.Intersects(rect))
-             {
+                {
                     player.sPosition = prevPos;
                     xr++;
                     Debug.WriteLine($"Colisão\n agane {xr}");
-             }
+                }
             }
 
             base.Update(gameTime);

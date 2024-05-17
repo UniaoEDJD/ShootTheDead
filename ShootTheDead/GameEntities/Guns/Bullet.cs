@@ -1,40 +1,44 @@
-﻿using ShootTheDead.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace ShootTheDead.GameEntities.Guns
+namespace ShootTheDead
 {
-    public class Bullet : AnimatedSprite
+    public class Bullet : Sprite
     {
-        public Vector2 Direction { get; set; }
-        public float Lifespan { get; private set; }
-        public int Damage { get; }
-        public static float TotalSeconds { get; set; }
-        public int Speed { get; set; } = 300;
-        public Vector2 Position { get; set; }
-        public float Rotation { get; set; }
+        public Vector2 Direction { get; private set; }
+        public float Speed { get; set; } = 500f; // Velocidade da bala
 
-        public Bullet(Vector2 pos, Texture2D tex, DataBu data) : base (data.Position, tex)
+        public Bullet(Vector2 position, Vector2 direction, Texture2D texture)
+            : base(position, texture)
         {
-            Speed = data.Speed;
-            Rotation = data.Rotation;
-            Direction = new((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
-            Lifespan = data.Lifespan;
-            Damage = data.Damage;
+            Direction = direction;
+            Direction.Normalize(); // Normaliza a direção para garantir um movimento consistente
+
+            // Adiciona animação com 1 frame (ou mais se necessário)
+            AddAnimation(1);
         }
 
-        public void Destroy()
+        public override void Update(GameTime gameTime)
         {
-            Lifespan = 0;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            sPosition += Direction * Speed * deltaTime; // Atualiza a posição da bala
+
+            base.Update(gameTime);
         }
 
-        public void Update()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Position += Direction * Speed * TotalSeconds;
-            Lifespan -= TotalSeconds;
+            spriteBatch.Draw(
+                sTexture,
+                sPosition,
+                sRectangles[frameIndex],
+                Color.White,
+                0f,
+                new Vector2(sRectangles[frameIndex].Width / 2, sRectangles[frameIndex].Height / 2),
+                1.0f,
+                SpriteEffects.None,
+                0f
+            );
         }
     }
 }
