@@ -14,6 +14,7 @@ namespace ShootTheDead
         private float Speed = 300;
         public Rectangle playerRect;
         private Map map = new Map();
+        private bool isMoving;
        
 
 
@@ -34,14 +35,13 @@ namespace ShootTheDead
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
+            //sTexture = content.Load<Texture2D>("survivor-walk_");
             AddAnimation(20);
             base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            
-
             HandleInput(Keyboard.GetState(), gameTime);
 
             // Obtém a posição do mouse
@@ -54,8 +54,6 @@ namespace ShootTheDead
             // Calcula a rotação em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
 
-
-
             /*if (cooldownLeft > 0)
             {
                 inGame = false;
@@ -67,29 +65,37 @@ namespace ShootTheDead
                 
             }*/
 
-
-            base.Update(gameTime);
+            if (isMoving)
+            {
+                // Atualiza a animação se o jogador estiver se movendo
+                base.Update(gameTime);
+            }
         }
 
         public void HandleInput(KeyboardState keyState, GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            isMoving = false;
 
             if (keyState.IsKeyDown(Keys.W))
             {
                 sPosition.Y -= Speed * deltaTime;
+                isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.A))
             {
                 sPosition.X -= Speed * deltaTime;
+                isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.S))
             {
                 sPosition.Y += Speed * deltaTime;
+                isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.D))
             {
                 sPosition.X += Speed * deltaTime;
+                isMoving = true;
             }
             playerRect.X = (int)sPosition.X;
             playerRect.Y = (int)sPosition.Y;
