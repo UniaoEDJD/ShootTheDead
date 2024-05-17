@@ -56,6 +56,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin skeleton-move_.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:skeleton-move_.png
+
 #begin survivor-move_handgun.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -67,18 +79,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:survivor-move_handgun.png
-
-#begin survivor-walk_.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:survivor-walk_.png
 
 #begin Textures/tiles.png
 /importer:TextureImporter
