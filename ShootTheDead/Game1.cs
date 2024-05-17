@@ -1,4 +1,6 @@
-﻿using ShootTheDead.Main;
+﻿using Microsoft.Xna.Framework.Graphics;
+using ShootTheDead.GameEntities;
+using ShootTheDead.Main;
 using System.Diagnostics;
 
 namespace ShootTheDead
@@ -29,7 +31,9 @@ namespace ShootTheDead
         private Viewport _viewport;
         Rectangle[] xxyy;
         Player player;
+        Enemy enemy;
         private Map map = new Map();
+        private Texture2D _enemyTexture;
 
         public void ChangeState(State state)
         {
@@ -88,6 +92,9 @@ namespace ShootTheDead
             {
                 map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, tilSize, tilSize));
             }
+            Enemy.Bounds = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            Enemy.Padding= 50;
+            Enemy.RandomGenerator = new Random();
             base.Initialize();
         }
 
@@ -102,7 +109,8 @@ namespace ShootTheDead
             xxyy[2] = new Rectangle(256, 192, tilSize, tilSize);
             xxyy[3] = new Rectangle(512, 576, tilSize, tilSize);
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-
+            _enemyTexture = Content.Load<Texture2D>("skeleton-move_");
+            Enemy.SpawnEnemy(_enemyTexture);
             player.LoadContent(Content);
         }
 
@@ -133,6 +141,8 @@ namespace ShootTheDead
                     Debug.WriteLine($"Colisão\n agane {xr}");
                 }
             }
+            Enemy.TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Enemy.UpdateEnemies(player);
 
             base.Update(gameTime);
         }
@@ -156,7 +166,7 @@ namespace ShootTheDead
 
             // Desenha o jogador
             player.Draw(spriteBatch);
-
+            Enemy.DrawEnemies(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
