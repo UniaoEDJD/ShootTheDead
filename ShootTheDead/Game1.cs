@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ShootTheDead.GameEntities;
 using ShootTheDead.Main;
+using ShootTheDead.Managers;
 using System.Diagnostics;
 
 namespace ShootTheDead
@@ -17,22 +18,17 @@ namespace ShootTheDead
         Texture2D[] runningTextures;
         int counter;
         int activeframe;
-        private int GAME_WIDTH = 1920;
-        private int GAME_HEIGHT = 1080;
         private int _virtualWidth = 1920;
         private int _virtualHeight = 1080;
         private State _currentState;
-        private int tilSize = 64;
         private State _nextState;
-        private Texture2D[] textures = new Texture2D[20];
-        private Texture2D backgroundTexture;
         public Matrix _screenScaleMatrix;
         private bool _isResizing;
         private Viewport _viewport;
-        Rectangle[] xxyy;
+        MapManager mapManager;
         Player player;
         Enemy enemy;
-        private Map map = new Map();
+        
         private Texture2D _enemyTexture;
 
         public void ChangeState(State state)
@@ -40,18 +36,18 @@ namespace ShootTheDead
             _nextState = state;
         }
 
-        public Texture2D getTexture(string textureName)
-        {
-            return Content.Load<Texture2D>("Textures/" + textureName);
-        }
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Globals.Content = Content;
+
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnClientSizeChanged;
+            
         }
 
         private void OnClientSizeChanged(object sender, EventArgs e)
@@ -77,21 +73,20 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            mapManager = new MapManager();
             Texture2D text = (Content.Load<Texture2D>("background"));
-            graphics.PreferredBackBufferWidth = GAME_WIDTH;
-            graphics.PreferredBackBufferHeight = GAME_HEIGHT;
+            graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
+            graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            mapManager.Initialize();
             // Adiciona o serviço SpriteBatch ao serviço de gráficos do jogo
             Services.AddService(spriteBatch);
             updateScreenScaleMatrix();
-            xxyy = new Rectangle[10];
-            map.LoadMap("level1.txt");
+            
+            
             player = new Player(new Vector2(300, 300), text);
-            foreach (var o in map.tiles)
-            {
-                map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, tilSize, tilSize));
-            }
+
             Enemy.Bounds = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             Enemy.Padding= 50;
             Enemy.RandomGenerator = new Random();
@@ -101,13 +96,8 @@ namespace ShootTheDead
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            backgroundTexture = Content.Load<Texture2D>("background");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            textures[0] = getTexture("tiles");
-            xxyy[0] = new Rectangle(384, 320, tilSize, tilSize);
-            xxyy[1] = new Rectangle(0, 768, tilSize, tilSize);
-            xxyy[2] = new Rectangle(256, 192, tilSize, tilSize);
-            xxyy[3] = new Rectangle(512, 576, tilSize, tilSize);
+            mapManager.LoadContent();
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
             _enemyTexture = Content.Load<Texture2D>("skeleton-move_");
             Enemy.SpawnEnemy(_enemyTexture);
@@ -127,20 +117,11 @@ namespace ShootTheDead
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            var xr = 0;
-            // Atualiza o player
             var prevPos = player.sPosition;
+            // Atualiza o player
             player.Update(gameTime);
-            foreach (var rect in map.colliders)
-            {  
-                if (player.playerRect.Intersects(rect))
-                {
-                    player.sPosition = prevPos;
-                    xr++;
-                    Debug.WriteLine($"Colisão\n agane {xr}");
-                }
-            }
+            mapManager.Update(player, prevPos);
+
             Enemy.TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Enemy.UpdateEnemies(player);
 
@@ -155,14 +136,8 @@ namespace ShootTheDead
             GraphicsDevice.Viewport = _viewport;
 
             // Desenha o background e o mapa
-            for (int i = 0; i < GAME_WIDTH; i += tilSize)
-            {
-                for (int j = 0; j < GAME_HEIGHT; j += tilSize)
-                {
-                    spriteBatch.Draw(textures[0], new Vector2(i, j), xxyy[2], Color.White);
-                }
-            }
-            map.drawMap(spriteBatch, textures[0], xxyy[0], xxyy[1], xxyy[3]);
+            mapManager.Draw(spriteBatch);
+            
 
             // Desenha o jogador
             player.Draw(spriteBatch);
@@ -180,18 +155,18 @@ namespace ShootTheDead
 
             if (screenWidth / _virtualWidth > screenHeight / _virtualHeight)
             {
-                float aspect = screenHeight / GAME_HEIGHT;
-                _virtualWidth = (int)(aspect * GAME_WIDTH);
+                float aspect = screenHeight / Globals.GAME_HEIGHT;
+                _virtualWidth = (int)(aspect * Globals.GAME_WIDTH);
                 _virtualHeight = (int)screenHeight;
             }
             else
             {
-                float aspect = screenWidth / GAME_WIDTH;
+                float aspect = screenWidth / Globals.GAME_WIDTH;
                 _virtualWidth = (int)screenWidth;
-                _virtualHeight = (int)(aspect * GAME_HEIGHT);
+                _virtualHeight = (int)(aspect * Globals.GAME_HEIGHT);
             }
 
-            _screenScaleMatrix = Matrix.CreateScale(_virtualWidth / (float)GAME_WIDTH);
+            _screenScaleMatrix = Matrix.CreateScale(_virtualWidth / (float)Globals.GAME_WIDTH);
 
             _viewport = new Viewport
             {
