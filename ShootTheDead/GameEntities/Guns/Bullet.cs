@@ -6,7 +6,7 @@ namespace ShootTheDead
     public class Bullet : Sprite
     {
         public Vector2 Direction { get; private set; }
-        public float Speed { get; set; } = 500f; // Velocidade da bala
+        public float Speed { get; set; } = 1000f; // Velocidade da bala
 
         public Bullet(Vector2 position, Vector2 direction, Texture2D texture)
             : base(position, texture)
@@ -22,7 +22,7 @@ namespace ShootTheDead
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             sPosition += Direction * Speed * deltaTime; // Atualiza a posição da bala
-
+            
             base.Update(gameTime);
         }
 

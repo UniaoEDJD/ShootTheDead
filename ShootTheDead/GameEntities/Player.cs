@@ -17,13 +17,14 @@ namespace ShootTheDead
         private bool isMoving;
         public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
         private Texture2D bulletTexture;
+        bool isShooting = false;
 
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
             framesPerSecond = 10;
 
-            playerRect = new Rectangle((int)position.X, (int)position.Y, 16, 16);
+            playerRect = new Rectangle((int)position.X, (int)position.Y, 64, 64);
         }
 
         public void LoadContent(ContentManager content)
@@ -31,15 +32,19 @@ namespace ShootTheDead
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
             bulletTexture = content.Load<Texture2D>("bullet");
             AddAnimation(20);
-            Initialize();
+            cooldown = 1;
+            cooldownLeft = cooldown;
         }
+
+
 
         public void Shoot()
         {
-            Vector2 bulletPosition = sPosition;
-            Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
-            Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
-            Bullets.Add(newBullet);
+                Vector2 bulletPosition = sPosition;
+                Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+                Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
+                Bullets.Add(newBullet);
+                
         }
 
         public override void Update(GameTime gameTime)
@@ -51,12 +56,20 @@ namespace ShootTheDead
 
             // Calcula a direção entre o jogador e o mouse
             Vector2 direction = mousePosition - sPosition;
-
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            cooldownLeft -= 5 * delta;
             // Calcula a rotação em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
             if (Keyboard.GetState().IsKeyDown(Keys.Space)) // Pressione a barra de espaço para atirar
             {
-                Shoot();
+                
+                if (cooldownLeft <= 0)
+                {
+                    Shoot();
+                    cooldownLeft = cooldown;
+                }
+                
+                
             }
 
             foreach (var bullet in Bullets)
@@ -69,6 +82,7 @@ namespace ShootTheDead
                 // Atualiza a animação se o jogador estiver se movendo
                 base.Update(gameTime);
             }
+            
         }
 
         public void HandleInput(KeyboardState keyState, GameTime gameTime)

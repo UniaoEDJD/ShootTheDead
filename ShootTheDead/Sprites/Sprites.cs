@@ -35,6 +35,7 @@ namespace ShootTheDead
             {
                 throw new ArgumentNullException(nameof(sTexture), "Texture cannot be null.");
             }
+
             // Initialize other properties if needed
         }
 
