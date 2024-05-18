@@ -1,12 +1,12 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using ShootTheDead.GameEntities;
 using ShootTheDead.Main;
+using System.Diagnostics;
 
 namespace ShootTheDead
 {
     public class Player : Sprite
     {
-        public float rotation;  // Adiciona a variável para armazenar a rotação
+        public float rotation;  // Adiciona a variï¿½vel para armazenar a rotaï¿½ï¿½o
         protected float cooldown;
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
@@ -15,10 +15,14 @@ namespace ShootTheDead
         public Rectangle playerRect;
         private Map map = new Map();
         private bool isMoving;
+        public int Health { get; private set; } = 5;
+        public bool isDead { get; private set; }
         public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
+        public bool isTakingDamage { get; private set; } = false;
         private Texture2D bulletTexture;
-        bool isShooting = false;
-
+        private bool isShooting = false;
+        private float cool = 3;
+        public int score;
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -36,58 +40,65 @@ namespace ShootTheDead
             cooldownLeft = cooldown;
         }
 
-
-
         public void Shoot()
         {
-                Vector2 bulletPosition = sPosition;
-                Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
-                Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
-                Bullets.Add(newBullet);
-                
+            Vector2 bulletPosition = sPosition;
+            Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+            Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
+            Bullets.Add(newBullet);
         }
 
         public override void Update(GameTime gameTime)
         {
             HandleInput(Keyboard.GetState(), gameTime);
-            // Obtém a posição do mouse
+            // Obtï¿½m a posiï¿½ï¿½o do mouse
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
 
-            // Calcula a direção entre o jogador e o mouse
+            // Calcula a direï¿½ï¿½o entre o jogador e o mouse
             Vector2 direction = mousePosition - sPosition;
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             cooldownLeft -= 5 * delta;
-            // Calcula a rotação em radianos
+            // Calcula a rotaï¿½ï¿½o em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
-            if (Keyboard.GetState().IsKeyDown(Keys.Space)) // Pressione a barra de espaço para atirar
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed) // Pressione a barra de espaï¿½o para atirar
             {
-                
                 if (cooldownLeft <= 0)
                 {
                     Shoot();
                     cooldownLeft = cooldown;
                 }
-                
-                
             }
 
             foreach (var bullet in Bullets)
             {
                 bullet.Update(gameTime);
+
+            }
+            if (isDead)
+            {
+                //implementar game over/mudanca de cena
             }
 
             if (isMoving)
             {
-                // Atualiza a animação se o jogador estiver se movendo
+                // Atualiza a animaï¿½ï¿½o se o jogador estiver se movendo
                 base.Update(gameTime);
             }
-            
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            if (Health <= 0)
+            {
+                isDead = true;
+            }
+            Debug.WriteLine("Player Health: " + Health);
         }
 
         public void HandleInput(KeyboardState keyState, GameTime gameTime)
         {
-            
             isMoving = false;
 
             if (keyState.IsKeyDown(Keys.W))
@@ -121,14 +132,14 @@ namespace ShootTheDead
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            // Desenha o jogador com rotação
+            // Desenha o jogador com rotaï¿½ï¿½o
             spriteBatch.Draw(
                 sTexture,
                 sPosition,
                 sRectangles[frameIndex],
                 Color.White,
-                rotation,  // Aplica a rotação
-                new Vector2(sRectangles[frameIndex].Width / 2, sRectangles[frameIndex].Height / 2),  // Origem da rotação
+                rotation,  // Aplica a rotaï¿½ï¿½o
+                new Vector2(sRectangles[frameIndex].Width / 2, sRectangles[frameIndex].Height / 2),  // Origem da rotaï¿½ï¿½o
                 1.0f,
                 SpriteEffects.None,
                 0f

@@ -1,7 +1,9 @@
 ﻿using ShootTheDead.GameEntities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,11 +17,12 @@ namespace ShootTheDead.Managers
         private static float _spawnTime;
         private static Random _random;
         private static int _padding;
+        static float cool = 3;
 
         public static void Init(ContentManager content)
         {
-            _texture = content.Load<Texture2D>("skeleton-move_");
-            _spawnCooldown = 0.33f;
+            _texture = content.Load<Texture2D>("skeleton-attack_");
+            _spawnCooldown = 1f;
             _spawnTime = _spawnCooldown;
             _random = new();
             _padding = _texture.Width / 2;
@@ -65,11 +68,45 @@ namespace ShootTheDead.Managers
                 AddZombie();
             }
 
-            foreach (var z in Zombies)
+            foreach (var z in Zombies.ToList())
             {
                 z.Update(player);
+                if (player.playerRect.Intersects(z.collider))
+                {
+                    if(!z.isKilling)
+                    {
+                        cool = 3;
+                        player.TakeDamage(1); 
+                        z.isKilling = true;
+                    }
+                    else
+                    {
+                        cool -= 1 * Globals.deltaTime;
+                        if(cool <= 0)
+                        {
+                            z.isKilling = false;
+                        }
+                    }
+                    
+                }
+                foreach (var b in player.Bullets.ToList())
+                {
+                    if (z.collider.Intersects(b.bulletRect))
+                    {
+                        z.TakeDamage(1);
+                        player.Bullets.RemoveAll((bullet) => bullet.bulletRect.Intersects(z.collider));
+                        Debug.WriteLine("He takin damage cuh");
+                    }
+                }
+                if (z.HP <= 0)
+                {
+                    player.score += 1;
+                    Zombies.RemoveAll((z) => z.HP <= 0);
+                    Debug.WriteLine($"score: {player.score}");
+                }
             }
-            Zombies.RemoveAll((z) => z.HP <= 0);
+            
+            
         }
 
         public static void Draw(SpriteBatch sprite)

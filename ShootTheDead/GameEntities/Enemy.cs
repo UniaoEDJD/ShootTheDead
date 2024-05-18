@@ -12,11 +12,14 @@ namespace ShootTheDead.GameEntities
     {
         public int HP { get; private set; }
         private Rectangle rect {get; set; }
+        public Rectangle collider;
+        public bool isKilling { get; set; } = false;
         public Enemy(Vector2 pos, Texture2D tex) : base(pos, tex)
         {
             rect = new Rectangle(0, 0, 288, tex.Height);
             Speed = 100;
             HP = 2;
+            collider =  new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
         }
         
         public void TakeDamage(int dmg)
@@ -28,7 +31,8 @@ namespace ShootTheDead.GameEntities
         {
             var toPlayer = player.sPosition - sPosition;
             Rotation = (float)Math.Atan2(toPlayer.Y, toPlayer.X);
-
+            collider.X = (int)sPosition.X;
+            collider.Y = (int)sPosition.Y;
             if (toPlayer.Length() > 4)
             {
                 var dir = Vector2.Normalize(toPlayer);

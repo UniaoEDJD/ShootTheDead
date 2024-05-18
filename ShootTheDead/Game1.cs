@@ -25,7 +25,11 @@ namespace ShootTheDead
         Player player;
         private static Rectangle[] sRectangles;
         Enemy enemy;
-        
+        ScoreManager scoreManager;
+        Score score;
+        SpriteFont font;
+        UI ui;
+
 
         public void ChangeState(State state)
         {
@@ -67,6 +71,7 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
             mapManager = new MapManager();
             Texture2D text = (Content.Load<Texture2D>("background"));
             graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
@@ -77,7 +82,7 @@ namespace ShootTheDead
             // Adiciona o serviço SpriteBatch ao serviço de gráficos do jogo
             Services.AddService(spriteBatch);
             Globals.updateScreenScaleMatrix(GraphicsDevice);
-       
+            ui = new UI(Content);
             
             player = new Player(new Vector2(300, 300), text);
             EnemyManager.Init(Content);
@@ -90,8 +95,9 @@ namespace ShootTheDead
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mapManager.LoadContent(Content);
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-            
-            
+
+            scoreManager = ScoreManager.Load();
+            font = Content.Load<SpriteFont>("Font");
             player.LoadContent(Content);
         }
 
@@ -107,12 +113,33 @@ namespace ShootTheDead
             //  _currentState.PostUpdate(gameTime);
             Globals.Update(gameTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                {
+                scoreManager.AddScore(new Main.Score()
+                {
+                    playerName = "Player",
+                    playerScore = player.score
+                });
+
+                ScoreManager.SaveScore(scoreManager);
+                Exit(); }
+            ui.Update(player.Health, 5);
             var prevPos = player.sPosition;
             // Atualiza o player
             player.Update(gameTime);
             EnemyManager.Update(player);
             mapManager.Update(player, prevPos);
+            if (player.isDead)
+            {
+                scoreManager.AddScore(new Main.Score()
+                {
+                    playerName = "Player",
+                    playerScore = player.score
+                });
+
+                ScoreManager.SaveScore(scoreManager);
+
+                Exit();
+            }
 
 
 
@@ -133,6 +160,7 @@ namespace ShootTheDead
             // Desenha o jogador
             player.Draw(spriteBatch);
             EnemyManager.Draw(spriteBatch);
+            ui.Draw(spriteBatch, player, font);
             spriteBatch.End();
 
             base.Draw(gameTime);
