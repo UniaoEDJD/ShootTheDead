@@ -56,6 +56,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin Sfx/hitHurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sfx/hitHurt.wav
+
+#begin Sfx/laserShoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sfx/laserShoot.wav
+
 #begin shade.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Audio;
 using ShootTheDead.GameEntities;
 using ShootTheDead.Main;
 using System.Diagnostics;
@@ -23,6 +24,7 @@ namespace ShootTheDead
         private bool isShooting = false;
         private float cool = 3;
         public int score;
+        SoundEffect shoot;
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -38,6 +40,7 @@ namespace ShootTheDead
             AddAnimation(20);
             cooldown = 1;
             cooldownLeft = cooldown;
+            shoot = content.Load<SoundEffect>("SFX/laserShoot");
         }
 
         public void Shoot()
@@ -46,6 +49,7 @@ namespace ShootTheDead
             Vector2 bulletDirection = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             Bullet newBullet = new Bullet(bulletPosition, bulletDirection, bulletTexture);
             Bullets.Add(newBullet);
+            shoot.Play();
         }
 
         public override void Update(GameTime gameTime)
@@ -94,6 +98,7 @@ namespace ShootTheDead
             {
                 isDead = true;
             }
+
             Debug.WriteLine("Player Health: " + Health);
         }
 

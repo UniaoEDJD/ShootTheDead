@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ShootTheDead.Sprites;
@@ -14,12 +15,14 @@ namespace ShootTheDead.GameEntities
         private Rectangle rect {get; set; }
         public Rectangle collider;
         public bool isKilling { get; set; } = false;
+        
         public Enemy(Vector2 pos, Texture2D tex) : base(pos, tex)
         {
             rect = new Rectangle(0, 0, 288, tex.Height);
             Speed = 100;
             HP = 2;
             collider =  new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+
         }
         
         public void TakeDamage(int dmg)

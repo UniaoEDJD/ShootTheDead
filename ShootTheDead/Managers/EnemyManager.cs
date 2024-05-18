@@ -1,4 +1,5 @@
-﻿using ShootTheDead.GameEntities;
+﻿using Microsoft.Xna.Framework.Audio;
+using ShootTheDead.GameEntities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,10 +19,12 @@ namespace ShootTheDead.Managers
         private static Random _random;
         private static int _padding;
         static float cool = 3;
+        static SoundEffect hitSound;
 
         public static void Init(ContentManager content)
         {
             _texture = content.Load<Texture2D>("skeleton-attack_");
+            hitSound = content.Load<SoundEffect>("SFX/hitHurt");
             _spawnCooldown = 1f;
             _spawnTime = _spawnCooldown;
             _random = new();
@@ -93,6 +96,7 @@ namespace ShootTheDead.Managers
                 {
                     if (z.collider.Intersects(b.bulletRect))
                     {
+                        hitSound.Play();
                         z.TakeDamage(1);
                         player.Bullets.RemoveAll((bullet) => bullet.bulletRect.Intersects(z.collider));
                         Debug.WriteLine("He takin damage cuh");
