@@ -53,9 +53,9 @@ namespace ShootTheDead.Managers
             map.drawMap(_spriteBatch, text, rect1, rect2, rect3);
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager Content)
         {
-            text = getTexture("tiles", Globals.Content);
+            text = getTexture("tiles", Content);
             xxyy[0] = new Rectangle(384, 320, Globals.TileSize, Globals.TileSize);
             xxyy[1] = new Rectangle(0, 768, Globals.TileSize, Globals.TileSize);
             xxyy[2] = new Rectangle(256, 192, Globals.TileSize, Globals.TileSize);

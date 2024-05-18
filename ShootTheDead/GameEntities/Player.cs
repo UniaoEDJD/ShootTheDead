@@ -87,27 +87,27 @@ namespace ShootTheDead
 
         public void HandleInput(KeyboardState keyState, GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
             isMoving = false;
 
             if (keyState.IsKeyDown(Keys.W))
             {
-                sPosition.Y -= Speed * deltaTime;
+                sPosition.Y -= Speed * Globals.deltaTime;
                 isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.A))
             {
-                sPosition.X -= Speed * deltaTime;
+                sPosition.X -= Speed * Globals.deltaTime;
                 isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.S))
             {
-                sPosition.Y += Speed * deltaTime;
+                sPosition.Y += Speed * Globals.deltaTime;
                 isMoving = true;
             }
             if (keyState.IsKeyDown(Keys.D))
             {
-                sPosition.X += Speed * deltaTime;
+                sPosition.X += Speed * Globals.deltaTime;
                 isMoving = true;
             }
             playerRect.X = (int)sPosition.X;

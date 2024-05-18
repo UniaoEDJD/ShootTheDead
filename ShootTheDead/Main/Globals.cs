@@ -16,14 +16,19 @@ namespace ShootTheDead
     public static class Globals
     {
         public static int TileSize = 64;
-        public static ContentManager Content { get; set; }
-        public static SpriteBatch SpriteBatch { get; set; }
+        public static float deltaTime;
         public static int GAME_WIDTH = 1920;
         public static int GAME_HEIGHT = 1080;
+        public static Point Bounds { get; set; }
         private static int _virtualWidth = 1920;
         private static int _virtualHeight = 1080;
         public static Viewport _viewport;
         public static Matrix _screenScaleMatrix;
+
+        public static void Update(GameTime gameTime)
+        {
+        deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
 
         public static void updateScreenScaleMatrix(GraphicsDevice graphicsDevice)
         {

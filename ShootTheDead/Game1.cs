@@ -18,17 +18,14 @@ namespace ShootTheDead
         Texture2D[] runningTextures;
         int counter;
         int activeframe;
-
         private State _currentState;
         private State _nextState;
-        
         private bool _isResizing;
-        
         MapManager mapManager;
         Player player;
+        private static Rectangle[] sRectangles;
         Enemy enemy;
         
-        private Texture2D _enemyTexture;
 
         public void ChangeState(State state)
         {
@@ -41,8 +38,6 @@ namespace ShootTheDead
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Globals.Content = Content;
-
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnClientSizeChanged;
@@ -82,13 +77,10 @@ namespace ShootTheDead
             // Adiciona o serviço SpriteBatch ao serviço de gráficos do jogo
             Services.AddService(spriteBatch);
             Globals.updateScreenScaleMatrix(GraphicsDevice);
-            
+       
             
             player = new Player(new Vector2(300, 300), text);
-
-            Enemy.Bounds = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            Enemy.Padding= 50;
-            Enemy.RandomGenerator = new Random();
+            EnemyManager.Init(Content);
             base.Initialize();
         }
 
@@ -96,10 +88,10 @@ namespace ShootTheDead
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mapManager.LoadContent();
+            mapManager.LoadContent(Content);
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-            _enemyTexture = Content.Load<Texture2D>("skeleton-move_");
-            Enemy.SpawnEnemy(_enemyTexture);
+            
+            
             player.LoadContent(Content);
         }
 
@@ -113,16 +105,16 @@ namespace ShootTheDead
             
             // _currentState.Update(gameTime);
             //  _currentState.PostUpdate(gameTime);
-
+            Globals.Update(gameTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             var prevPos = player.sPosition;
             // Atualiza o player
             player.Update(gameTime);
+            EnemyManager.Update(player);
             mapManager.Update(player, prevPos);
 
-            Enemy.TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Enemy.UpdateEnemies(player);
+
 
             base.Update(gameTime);
         }
@@ -140,7 +132,7 @@ namespace ShootTheDead
 
             // Desenha o jogador
             player.Draw(spriteBatch);
-            Enemy.DrawEnemies(spriteBatch);
+            EnemyManager.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
