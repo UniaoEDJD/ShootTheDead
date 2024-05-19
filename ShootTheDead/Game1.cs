@@ -36,8 +36,6 @@ namespace ShootTheDead
             _nextState = state;
         }
 
-
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -95,7 +93,6 @@ namespace ShootTheDead
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mapManager.LoadContent(Content);
             // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-
             scoreManager = ScoreManager.Load();
             font = Content.Load<SpriteFont>("Font");
             player.LoadContent(Content);
@@ -126,7 +123,7 @@ namespace ShootTheDead
             var prevPos = player.sPosition;
             // Atualiza o player
             player.Update(gameTime);
-            EnemyManager.Update(player);
+            EnemyManager.Update(player, gameTime);
             mapManager.Update(player, prevPos);
             if (player.isDead)
             {

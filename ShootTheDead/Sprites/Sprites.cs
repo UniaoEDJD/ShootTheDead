@@ -39,18 +39,15 @@ namespace ShootTheDead
             // Initialize other properties if needed
         }
 
-        public void AddAnimation(int frames)
+        protected void AddAnimation(int frameCount)
         {
-            if (sTexture == null)
-            {
-                throw new InvalidOperationException("Texture must be set before adding animation.");
-            }
+            int frameWidth = sTexture.Width / frameCount;
+            int frameHeight = sTexture.Height;
+            sRectangles = new Rectangle[frameCount];
 
-            int width = sTexture.Width / frames;
-            sRectangles = new Rectangle[frames];
-            for (int i = 0; i < frames; i++)
+            for (int i = 0; i < frameCount; i++)
             {
-                sRectangles[i] = new Rectangle(i * width, 0, width, sTexture.Height);
+                sRectangles[i] = new Rectangle(i * frameWidth, 0, frameWidth, frameHeight);
             }
         }
 

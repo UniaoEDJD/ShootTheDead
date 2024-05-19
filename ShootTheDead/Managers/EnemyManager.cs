@@ -23,7 +23,7 @@ namespace ShootTheDead.Managers
 
         public static void Init(ContentManager content)
         {
-            _texture = content.Load<Texture2D>("skeleton-attack_");
+            _texture = content.Load<Texture2D>("skeleton-move_");
             hitSound = content.Load<SoundEffect>("SFX/hitHurt");
             _spawnCooldown = 1f;
             _spawnTime = _spawnCooldown;
@@ -62,7 +62,7 @@ namespace ShootTheDead.Managers
             Zombies.Add(new(RandomPosition(), _texture));
         }
 
-        public static void Update(Player player)
+        public static void Update(Player player, GameTime gameTime)
         {
             _spawnTime -= Globals.deltaTime;
             while (_spawnTime <= 0)
@@ -73,7 +73,7 @@ namespace ShootTheDead.Managers
 
             foreach (var z in Zombies.ToList())
             {
-                z.Update(player);
+                z.Update(player, gameTime);
                 if (player.playerRect.Intersects(z.collider))
                 {
                     if(!z.isKilling)
