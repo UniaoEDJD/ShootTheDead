@@ -77,11 +77,9 @@ namespace ShootTheDead
             graphics.ApplyChanges();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mapManager.Initialize();
-            // Adiciona o serviço SpriteBatch ao serviço de gráficos do jogo
             Services.AddService(spriteBatch);
             Globals.updateScreenScaleMatrix(GraphicsDevice);
             ui = new UI(Content);
-            
             player = new Player(new Vector2(300, 300), text);
             EnemyManager.Init(Content);
             base.Initialize();

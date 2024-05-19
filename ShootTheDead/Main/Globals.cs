@@ -29,7 +29,7 @@ namespace ShootTheDead
 
         public static void Update(GameTime gameTime)
         {
-        deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public static void updateScreenScaleMatrix(GraphicsDevice graphicsDevice)
