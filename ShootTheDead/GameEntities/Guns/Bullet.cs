@@ -14,7 +14,7 @@ namespace ShootTheDead
             Direction = direction;
             Direction.Normalize(); // Normaliza a direção para garantir um movimento consistente
             bulletRect = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-            // Adiciona animação com 1 frame (ou mais se necessário)
+            // Adiciona animação com 1 frame
             AddAnimation(1);
         }
 

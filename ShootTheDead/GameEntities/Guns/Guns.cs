@@ -10,9 +10,7 @@ namespace ShootTheDead.GameEntities.Guns
     {
         protected float cooldown;
         protected float cooldownLeft;
-        protected int maxAmmo;
         public int Ammo { get; protected set; }
-        protected float reloadTime;
         public bool Reloading { get; protected set; }
         public static float TotalSeconds { get; set; }
 

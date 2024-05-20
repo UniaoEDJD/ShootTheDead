@@ -74,6 +74,7 @@ namespace ShootTheDead.States
             Globals.Update(gameTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
                 scoreManager.AddScore(new Main.Score()
                 {
                     playerName = "Player",

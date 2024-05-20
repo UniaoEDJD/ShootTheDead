@@ -65,7 +65,7 @@ namespace ShootTheDead
             cooldownLeft -= 5 * delta;
             // Calcula a rota��o em radianos
             rotation = (float)Math.Atan2(direction.Y, direction.X);
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed) // Pressione a barra de espa�o para atirar
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed) //  leftclick para atirar
             {
                 if (cooldownLeft <= 0)
                 {
@@ -128,11 +128,6 @@ namespace ShootTheDead
             }
             playerRect.X = (int)sPosition.X;
             playerRect.Y = (int)sPosition.Y;
-        }
-
-        public void SwapWeapon()
-        {
-            //Gun = (Gun == _weapon1) ? _weapon2 : _weapon1;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
