@@ -7,7 +7,7 @@
         protected GraphicsDevice _graphicsDevice;
 
         protected Game1 _game;
-        public abstract void LoadContent();
+        public abstract void LoadContent( );
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 

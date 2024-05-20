@@ -18,14 +18,12 @@ namespace ShootTheDead
         int counter;
         int activeframe;
         private bool _isResizing;
-        MapManager mapManager;
-        Player player;
+  
         private static Rectangle[] sRectangles;
         Enemy enemy;
         ScoreManager scoreManager;
         Score score;
         SpriteFont font;
-        UI ui;
         private State _currentState;
         private State _nextState;
 
@@ -68,17 +66,14 @@ namespace ShootTheDead
         protected override void Initialize()
         {
             Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
-            mapManager = new MapManager();
-            Texture2D text = (Content.Load<Texture2D>("background"));
             graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
             graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mapManager.Initialize();
-            Services.AddService(spriteBatch);
+            
+            
             Globals.updateScreenScaleMatrix(GraphicsDevice);
-            ui = new UI(Content);
-            player = new Player(new Vector2(300, 300), text);
+            
             EnemyManager.Init(Content);
             base.Initialize();
         }
@@ -101,17 +96,17 @@ namespace ShootTheDead
                 _nextState = null;
             }
             _currentState.Update(gameTime);
-            _currentState.PostUpdate(gameTime);
+            
             
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {   
-            spriteBatch.Begin();
+            
             GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Viewport = Globals._viewport;
             _currentState.Draw(gameTime, spriteBatch);  
-            spriteBatch.End();
             base.Draw(gameTime);
         }
 

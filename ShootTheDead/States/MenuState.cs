@@ -1,10 +1,4 @@
 ﻿using ShootTheDead.Control;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShootTheDead.Control;
 using static System.Net.Mime.MediaTypeNames;
 using System.ComponentModel;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +10,7 @@ namespace ShootTheDead.States
         private List<Control.Component> components;
 
         private Texture2D menuBackGroundTexture;
+
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
@@ -44,6 +39,7 @@ namespace ShootTheDead.States
                 newGameButton,
                 quitGameButton,
             };
+
         }
 
         public override void LoadContent()
@@ -73,11 +69,12 @@ namespace ShootTheDead.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix);
             spriteBatch.Draw(menuBackGroundTexture, new Vector2(0, 0), Color.White);
 
             foreach (var component in components)
                 component.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
 
         }
     }
