@@ -20,10 +20,10 @@ namespace ShootTheDead.GameEntities
 
         public Enemy(Vector2 pos, Texture2D tex) : base(pos, tex)
         {
-            rect = new Rectangle(0, 0, 288, tex.Height);
+            rect = new Rectangle(0, 0, 64, tex.Height);
             Speed = 250;
             HP = 2;
-            collider = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            collider = new Rectangle(0, 0, 144, tex.Height);
             sRectangles = new List<Rectangle>();
             frameIndex = 0;
             timeElapsed = 0;
@@ -54,8 +54,8 @@ namespace ShootTheDead.GameEntities
             // Update position and rotation
             var toPlayer = player.sPosition - sPosition;
             Rotation = (float)Math.Atan2(toPlayer.Y, toPlayer.X);
-            collider.X = (int)sPosition.X;
-            collider.Y = (int)sPosition.Y;
+            collider.X = (int)sPosition.X - 50;
+            collider.Y = (int)sPosition.Y - 50;
             if (toPlayer.Length() > 4)
             {
                 var dir = Vector2.Normalize(toPlayer);
@@ -73,7 +73,9 @@ namespace ShootTheDead.GameEntities
                 }
                 timeElapsed -= timeToUpdate;
             }
+
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -88,6 +90,8 @@ namespace ShootTheDead.GameEntities
                 SpriteEffects.None,
                 0f
             );
+
+            
         }
     }
 }

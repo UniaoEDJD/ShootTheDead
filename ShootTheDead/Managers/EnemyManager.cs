@@ -24,7 +24,7 @@ namespace ShootTheDead.Managers
         public static void Init(ContentManager content)
         {
             _texture = content.Load<Texture2D>("skeleton-move_");
-            hitSound = content.Load<SoundEffect>("SFX/hitHurt");
+            hitSound = content.Load<SoundEffect>("Sfx/hitHurt");
             _spawnCooldown = 1f;
             _spawnTime = _spawnCooldown;
             _random = new();

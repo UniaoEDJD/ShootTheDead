@@ -40,7 +40,7 @@ namespace ShootTheDead
             AddAnimation(20);
             cooldown = 1;
             cooldownLeft = cooldown;
-            shoot = content.Load<SoundEffect>("SFX/laserShoot");
+            shoot = content.Load<SoundEffect>("Sfx/laserShoot");
         }
 
         public void Shoot()
