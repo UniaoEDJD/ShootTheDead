@@ -20,7 +20,6 @@ namespace ShootTheDead.States
 {
     public class GameState : State
     {
-        GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Point _oldMousePosition;
         private float _mouseSpeed = 0.05f;
@@ -42,24 +41,28 @@ namespace ShootTheDead.States
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
            : base(game, graphicsDevice, content)
         {
-
+            mapManager = new MapManager();
         }
 
         public override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            // Create a new GraphicsDeviceManager
+
+            ui = new UI(_content);
+            mapManager.Initialize();
             mapManager.LoadContent(_content);
             scoreManager = ScoreManager.Load();
             font = _content.Load<SpriteFont>("Font");
+            Texture2D text = (_content.Load<Texture2D>("background"));
+            player = new Player(new Vector2(300, 300), text);
             player.LoadContent(_content);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
-            GraphicsDevice.Clear(Color.Black);
-            GraphicsDevice.Viewport = Globals._viewport;
+
+
             // Desenha o background e o mapa
             mapManager.Draw(spriteBatch);
             // Desenha o jogador
@@ -96,14 +99,16 @@ namespace ShootTheDead.States
                     playerName = "Player",
                     playerScore = player.score
                 });
+
                 ScoreManager.SaveScore(scoreManager);
+
                 Exit();
             }
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }
