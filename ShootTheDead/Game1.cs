@@ -2,6 +2,7 @@
 using ShootTheDead.GameEntities;
 using ShootTheDead.Main;
 using ShootTheDead.Managers;
+using ShootTheDead.States;
 using System.Diagnostics;
 
 namespace ShootTheDead
@@ -10,16 +11,12 @@ namespace ShootTheDead
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         private Point _oldMousePosition;
         private float _mouseSpeed = 0.05f;
         private Vector2 _cameraTarget = Vector2.Zero;
-        private int _oldMouseZoom;
         Texture2D[] runningTextures;
         int counter;
         int activeframe;
-        private State _currentState;
-        private State _nextState;
         private bool _isResizing;
         MapManager mapManager;
         Player player;
@@ -29,12 +26,8 @@ namespace ShootTheDead
         Score score;
         SpriteFont font;
         UI ui;
-
-
-        public void ChangeState(State state)
-        {
-            _nextState = state;
-        }
+        private State _currentState;
+        private State _nextState;
 
         public Game1()
         {
@@ -67,6 +60,11 @@ namespace ShootTheDead
             }
         }
 
+        public void ChangeState(State state)
+        {
+            _nextState = state;
+        }
+
         protected override void Initialize()
         {
             Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
@@ -87,77 +85,33 @@ namespace ShootTheDead
 
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mapManager.LoadContent(Content);
-            // _currentState = new MenuState(this, graphics.GraphicsDevice, Content);
-            scoreManager = ScoreManager.Load();
-            font = Content.Load<SpriteFont>("Font");
-            player.LoadContent(Content);
+            _currentState = new MenuState(this, GraphicsDevice, Content);
+            _currentState.LoadContent();
+            _nextState = null;
         }
 
         protected override void Update(GameTime gameTime)
-        {
-            // if (_nextState != null)
-            // {
-            //      _currentState = _nextState;
-            //      _nextState = null;
-            //  }
-            
-            // _currentState.Update(gameTime);
-            //  _currentState.PostUpdate(gameTime);
-            Globals.Update(gameTime);
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                {
-                scoreManager.AddScore(new Main.Score()
-                {
-                    playerName = "Player",
-                    playerScore = player.score
-                });
-
-                ScoreManager.SaveScore(scoreManager);
-                Exit(); }
-            ui.Update(player.Health, 5);
-            var prevPos = player.sPosition;
-            // Atualiza o player
-            player.Update(gameTime);
-            EnemyManager.Update(player, gameTime);
-            mapManager.Update(player, prevPos);
-            if (player.isDead)
+        { 
+            if(_nextState != null)
             {
-                scoreManager.AddScore(new Main.Score()
-                {
-                    playerName = "Player",
-                    playerScore = player.score
-                });
+                _currentState = _nextState;
+                _currentState.LoadContent();
 
-                ScoreManager.SaveScore(scoreManager);
-
-                Exit();
+                _nextState = null;
             }
-
-
-
+            _currentState.Update(gameTime);
+            _currentState.PostUpdate(gameTime);
+            
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
-        {
-            spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
-            GraphicsDevice.Clear(Color.Black);
-
-            GraphicsDevice.Viewport = Globals._viewport;
-
-            // Desenha o background e o mapa
-            mapManager.Draw(spriteBatch);
-            
-
-            // Desenha o jogador
-            player.Draw(spriteBatch);
-            EnemyManager.Draw(spriteBatch);
-            ui.Draw(spriteBatch, player, font);
+        {   
+            spriteBatch.Begin();
+            GraphicsDevice.Clear(Color.White);
+            _currentState.Draw(gameTime, spriteBatch);  
             spriteBatch.End();
-
             base.Draw(gameTime);
         }
 

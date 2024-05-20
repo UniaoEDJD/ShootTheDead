@@ -10,7 +10,6 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Xml;
-global using ShootTheDead.States;
 using System.Reflection.Metadata;
 
 namespace ShootTheDead

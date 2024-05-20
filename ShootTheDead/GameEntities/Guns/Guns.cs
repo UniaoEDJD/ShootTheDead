@@ -19,14 +19,6 @@ namespace ShootTheDead.GameEntities.Guns
         protected Gun()
         {
             cooldownLeft = 0f;
-            Reloading = false;
-        }
-        public virtual void Reload()
-        {
-            if (Reloading || (Ammo == maxAmmo)) return;
-            cooldownLeft = reloadTime;
-            Reloading = true;
-            Ammo = maxAmmo;
         }
 
         public abstract void CreateProjectiles(Player player);
@@ -39,10 +31,6 @@ namespace ShootTheDead.GameEntities.Guns
             {
                 cooldownLeft = cooldown;
             }
-            else
-            {
-                Reload();
-            }
 
             CreateProjectiles(player);
         }
@@ -52,10 +40,6 @@ namespace ShootTheDead.GameEntities.Guns
             if (cooldownLeft > 0)
             {
                 cooldownLeft -= TotalSeconds;
-            }
-            else if (Reloading)
-            {
-                Reloading = false;
             }
         }
     }
