@@ -20,23 +20,11 @@ namespace ShootTheDead.States
 {
     public class GameState : State
     {
-        SpriteBatch spriteBatch;
-        private Point _oldMousePosition;
-        private float _mouseSpeed = 0.05f;
-        private Vector2 _cameraTarget = Vector2.Zero;
-        Texture2D[] runningTextures;
-        int counter;
-        int activeframe;
-        private bool _isResizing;
         MapManager mapManager;
         Player player;
-        private static Rectangle[] sRectangles;
-        Enemy enemy;
         ScoreManager scoreManager;
-        Score score;
         SpriteFont font;
         UI ui;
-        Game1 Game;
 
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
            : base(game, graphicsDevice, content)
