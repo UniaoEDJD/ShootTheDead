@@ -11,19 +11,7 @@ namespace ShootTheDead
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Point _oldMousePosition;
-        private float _mouseSpeed = 0.05f;
-        private Vector2 _cameraTarget = Vector2.Zero;
-        Texture2D[] runningTextures;
-        int counter;
-        int activeframe;
         private bool _isResizing;
-  
-        private static Rectangle[] sRectangles;
-        Enemy enemy;
-        ScoreManager scoreManager;
-        Score score;
-        SpriteFont font;
         private State _currentState;
         private State _nextState;
 
