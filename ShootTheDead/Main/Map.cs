@@ -17,7 +17,6 @@ namespace ShootTheDead.Main
         public List<Rectangle> colliders;
 
 
-
         public void LoadMap(string levelFile)
         {
 

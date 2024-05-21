@@ -24,7 +24,7 @@ namespace ShootTheDead.Managers
 
         public void UpdateHighScores()
         {
-            HighScores = Scores.Take(20).ToList();
+            HighScores = Scores.Take(5).ToList();
         }
 
         public void AddScore(Score score)

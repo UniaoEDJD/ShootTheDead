@@ -19,9 +19,7 @@ namespace ShootTheDead.Control
         private bool _isHovering;
         private MouseState _previousMouse;
         private Texture2D _texture;
-
         public event EventHandler Click;
-        public bool Clicked { get; private set; }
         public Color PenColor { get; set; }
         public Vector2 Position { get; set; }
         public string Text { get; set; }

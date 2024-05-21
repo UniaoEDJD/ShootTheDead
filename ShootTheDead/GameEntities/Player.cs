@@ -8,16 +8,14 @@ namespace ShootTheDead
         protected float cooldown;
         protected float cooldownLeft;
         public static float TotalSeconds { get; set; }
-        public bool Reloading { get; protected set; }
         private float Speed = 300;
         public Rectangle playerRect;
         private bool isMoving;
         public int Health { get; private set; } = 5;
         public bool isDead { get; set; }
         public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
-        public bool isTakingDamage { get; private set; } = false;
-        private Texture2D bulletTexture;
         public int score;
+        private Texture2D bulletTexture;
         SoundEffect shoot;
         static SoundEffect hurt;
 
@@ -80,17 +78,11 @@ namespace ShootTheDead
                     cooldownLeft = cooldown;
                 }
             }
-
             foreach (var bullet in Bullets)
             {
                 bullet.Update(gameTime);
 
             }
-            if (isDead)
-            {
-                
-            }
-
             if (isMoving)
             {
                 base.Update(gameTime);
@@ -152,8 +144,6 @@ namespace ShootTheDead
                 SpriteEffects.None,
                 0f
             );
-
-
             foreach (var bullet in Bullets)
             {
                 bullet.Draw(spriteBatch);

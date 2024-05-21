@@ -12,11 +12,11 @@ namespace ShootTheDead.GameEntities
         public int HP { get; private set; }  // Vida do inimigo
         private Rectangle rect { get; set; }  // Retângulo de desenho
         public Rectangle collider;  // Colisor do inimigo
-        public bool isKilling { get; set; } = false;  // Flag para indicar se o inimigo está matando
         private int frameIndex;  // Índice do quadro de animação atual
         private float timeElapsed;  // Tempo decorrido desde a última atualização do quadro
         private float timeToUpdate;  // Tempo a ser esperado para atualizar o quadro
         private List<Rectangle> sRectangles;  // Lista de retângulos de animação
+        public bool isKilling { get; set; } = false;  // Flag para indicar se o inimigo está a matar
 
         // Construtor do inimigo
         public Enemy(Vector2 pos, Texture2D tex) : base(pos, tex)

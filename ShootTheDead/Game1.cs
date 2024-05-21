@@ -28,10 +28,6 @@ namespace ShootTheDead
             Instance = this;
         }
 
-
-
-
-
         public void OnResize1()
         {
             graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
