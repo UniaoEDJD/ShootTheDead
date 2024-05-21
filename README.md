@@ -4,6 +4,8 @@
 
 ### Descrição
 Shoot The Dead é um jogo do estilo de Topdown Shooter que é um jogo endless onde não há limite de spawn de Zombies até o jogador morrer.
+![Background](https://github.com/UniaoEDJD/ShootTheDead/assets/150021756/9bf57dfd-ce06-45aa-b8ad-e76680c0c1c3)
+
 
 ### Controles do Jogo
  - W: Andar para frente
@@ -12,4 +14,11 @@ Shoot The Dead é um jogo do estilo de Topdown Shooter que é um jogo endless on
  - D: Andar para a direita
  - Botão esquerdo do rato: Disparar
 
-### 
+### Demonstração
+// mete o video aqui
+
+### Sobre este projeto
+O nosso jogo é um top down shooter tal como dito em cima, onde fizemos a implementação de animações do player e dos inimigos, tal como o movimento autónomo dos inimigos até ao player, implementação de colisões nas bordas do mapa e colisões nos inimigos para quando recebem tiros do player, implementação de som, implementação de menus e de um sistema de scores. 
+
+### Conclusão
+Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capacidades para futuros trabalhos que possámos vir a ter de realizar com o uso da framework do Monogame.
