@@ -99,7 +99,6 @@ namespace ShootTheDead.Managers
                         hitSound.Play();
                         z.TakeDamage(1);
                         player.Bullets.RemoveAll((bullet) => bullet.bulletRect.Intersects(z.collider));
-                        Debug.WriteLine("He takin damage cuh");
                     }
                 }
                 if (z.HP <= 0)

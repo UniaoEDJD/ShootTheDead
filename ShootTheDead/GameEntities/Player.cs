@@ -57,6 +57,12 @@ namespace ShootTheDead
             shoot.Play();
         }
 
+        public void Reset()
+        {
+            isDead = false;
+            sPosition = new Vector2(300, 300);
+        }
+
         public override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
@@ -104,8 +110,6 @@ namespace ShootTheDead
             {
                 isDead = true;
             }
-            Debug.WriteLine("Player Health: " + Health);
-            Debug.WriteLine("Is dead? " + isDead);
         }
 
         public void HandleInput(KeyboardState state,GameTime gameTime)

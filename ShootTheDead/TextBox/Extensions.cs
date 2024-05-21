@@ -1,5 +1,4 @@
-﻿
-namespace ShootTheDead
+﻿namespace ShootTheDead
 {
     public static class Extensions
     {

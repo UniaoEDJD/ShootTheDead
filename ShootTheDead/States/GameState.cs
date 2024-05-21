@@ -51,6 +51,12 @@ namespace ShootTheDead.States
             player = new Player(new Vector2(300, 300), text);
             player.LoadContent(_content);
         }
+
+        public void Restart()
+        {
+            EnemyManager.Reset();
+            player.Reset();
+        }
         
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -86,7 +92,8 @@ namespace ShootTheDead.States
 
                 ScoreManager.SaveScore(scoreManager);
                 player.isDead = false;
-                _game.ChangeState(new HighscoresState(_game, _graphicsDevice, _content));
+                _game.ChangeState(new GameOverState(_game, _graphicsDevice, _content));
+                Restart();
             }
         }
 

@@ -68,9 +68,9 @@ namespace ShootTheDead.States
             ScoreManager.Load();
             menuBackGroundTexture = _content.Load<Texture2D>("Background");
 
-            viewport = new Rectangle(50, 50, 400, 200);
-            textBox = new TextBox(viewport, 200, "This is a test. Move the cursor, select, delete, write...",
-                _graphicsDevice, font, Color.LightGray, Color.DarkGreen, 30);
+            viewport = new Rectangle(870, 100, 400, 200);
+            textBox = new TextBox(viewport, 200, "Insert your nickname!",
+            _graphicsDevice, font, Color.LightGray, Color.DarkGreen, 30);
         }
 
         private void Button_NewGame_Click(object sender, EventArgs e)
@@ -96,13 +96,10 @@ namespace ShootTheDead.States
             foreach (var component in components)
                 component.Update(gameTime);
             KeyboardInput.Update();
-
             float margin = 3;
-            textBox.Area = new Rectangle((int)(viewport.X + margin), viewport.Y, (int)(viewport.Width - margin),
-                viewport.Height);
+            textBox.Area = new Rectangle((int)(viewport.X + margin), viewport.Y, (int)(viewport.Width - margin), viewport.Height);
             textBox.Renderer.Color = Color.White;
             textBox.Cursor.Selection = new Color(Color.Purple, .4f);
-
             float lerpAmount = (float)(gameTime.TotalGameTime.TotalMilliseconds % 500f / 500f);
             textBox.Cursor.Color = Color.Lerp(Color.DarkGray, Color.LightGray, lerpAmount);
             Globals.player = textBox.Text.String;
@@ -127,9 +124,9 @@ namespace ShootTheDead.States
             spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
             textBox.Draw(spriteBatch);
             foreach (var component in components)
-                { 
-                component.Draw(gameTime, spriteBatch);  
-                }
+            { 
+               component.Draw(gameTime, spriteBatch);  
+            }
                 
             spriteBatch.End();
 

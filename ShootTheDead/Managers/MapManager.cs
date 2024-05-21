@@ -22,7 +22,6 @@ namespace ShootTheDead.Managers
             foreach (var o in map.tiles)
             {
                 map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, Globals.TileSize, Globals.TileSize));
-                Debug.WriteLine($"Collider: {o.X}, {o.Y}");
             }
         }
         public Texture2D getTexture(string textureName, ContentManager Content)
@@ -37,8 +36,6 @@ namespace ShootTheDead.Managers
                 if (player.playerRect.Intersects(rect))
                 {
                     player.sPosition = prevPos;
-                    Debug.WriteLine("Collision");
-
                 }
             }
         }

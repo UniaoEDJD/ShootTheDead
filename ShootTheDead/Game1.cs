@@ -128,6 +128,9 @@ namespace ShootTheDead
                 case GameStateType.HighScore:
                     Window.AllowUserResizing = true;
                     break;
+                case GameStateType.GameOver:
+                    Window.AllowUserResizing = true;
+                    break;
                     // Add other cases as needed
             }
         }
