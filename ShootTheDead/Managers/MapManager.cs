@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using ShootTheDead.Main;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
-
-namespace ShootTheDead.Managers
+﻿namespace ShootTheDead.Managers
 {
     public class MapManager
     {

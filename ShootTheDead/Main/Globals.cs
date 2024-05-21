@@ -1,10 +1,10 @@
-global using System;
+
 global using Microsoft.VisualBasic;
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
 global using Microsoft.Xna.Framework.Content;
-global using System.Xml;
+global using Microsoft.Xna.Framework.Media;
 global using Microsoft.Xna.Framework.Audio;
 global using ShootTheDead.Main;
 global using System.Collections.Generic;
@@ -12,9 +12,16 @@ global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using System.IO;
+global using System.Diagnostics;
+global using System.Reflection.Metadata;
+global using System.Xml.Serialization;
+global using System.Xml;
 global using ShootTheDead.Managers;
 global using ShootTheDead.States;
-using System.Reflection.Metadata;
+global using ShootTheDead.Sprites;
+global using ShootTheDead.Control;
+using static ShootTheDead.States.State;
+
 
 namespace ShootTheDead
 {

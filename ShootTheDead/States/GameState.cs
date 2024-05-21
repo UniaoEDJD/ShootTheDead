@@ -1,22 +1,4 @@
-﻿using ShootTheDead.Control;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using System.ComponentModel;
-using ShootTheDead.Managers;
-using ShootTheDead.GameEntities;
-using ShootTheDead.Main;
-using System.Reflection.Metadata;
-using Microsoft.Xna.Framework.Graphics;
-using ShootTheDead.States;
-using System.Diagnostics;
-using ShootTheDead.Sprites;
-using ShootTheDead;
-
-namespace ShootTheDead.States
+﻿namespace ShootTheDead.States
 {
     public class GameState : State
     {

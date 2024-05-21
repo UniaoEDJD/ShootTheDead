@@ -1,10 +1,4 @@
-﻿using ShootTheDead.Control;
-using static System.Net.Mime.MediaTypeNames;
-using System.ComponentModel;
-using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
-
-namespace ShootTheDead.States
+﻿namespace ShootTheDead.States
 {
     public class MenuState : State
     {
