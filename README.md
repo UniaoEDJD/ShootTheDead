@@ -12,6 +12,7 @@ Shoot The Dead é um jogo do estilo de Topdown Shooter que é um jogo endless on
  - S: Andar para trás
  - D: Andar para a direita
  - Botão esquerdo do rato: Disparar
+ - F: Fullscreen
 
 ### Sobre este projeto
 O nosso jogo é um top down shooter tal como dito em cima, onde fizemos a implementação de animações do player e dos inimigos, tal como o movimento autónomo dos inimigos até ao player, implementação de colisões nas bordas do mapa e colisões nos inimigos para quando recebem tiros do player, implementação de som, implementação de menus e de um sistema de scores. 
