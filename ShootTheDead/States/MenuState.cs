@@ -203,7 +203,6 @@ namespace ShootTheDead.States
             { 
                component.Draw(gameTime, spriteBatch);  
             }
-                
             spriteBatch.End();
 
         }

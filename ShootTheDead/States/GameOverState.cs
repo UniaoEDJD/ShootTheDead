@@ -28,17 +28,17 @@ namespace ShootTheDead.States
             // Calcular a posição centralizada horizontalmente
             float centerX = Globals._virtualWidth / 2;
 
-            // Inicializar os botões com posição centralizada horizontalmente
+            // Inicializar os botões com posição centralizada horizontalmente e verticalmente apropriada
             var restartButton = new Button(buttonTexture, font)
             {
-                Position = new Vector2(centerX - buttonTexture.Width / 2, Globals._virtualHeight / 2 - 300),
+                Position = new Vector2(centerX - buttonTexture.Width / 2, Globals._virtualHeight / 4),
                 Text = "Restart",
             };
             restartButton.Click += RestartButton_Click;
 
             var exitButton = new Button(buttonTexture, font)
             {
-                Position = new Vector2(centerX - buttonTexture.Width / 2, Globals._virtualHeight / 2 + 50),
+                Position = new Vector2(centerX - buttonTexture.Width / 2, 3 * Globals._virtualHeight / 4),
                 Text = "Exit",
             };
             exitButton.Click += ExitButton_Click;
@@ -76,8 +76,10 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
-            components[0].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2);
-            components[1].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 50);
+            // Update the positions of the buttons in case the screen size changes
+            components[0].Position = new Vector2(Globals._virtualWidth / 2 - buttonTexture.Width / 2, Globals._virtualHeight / 4);
+            components[1].Position = new Vector2(Globals._virtualWidth / 2 - buttonTexture.Width / 2, 3 * Globals._virtualHeight / 4);
+
             foreach (var component in components)
                 component.Update(gameTime);
         }
