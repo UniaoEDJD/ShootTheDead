@@ -40,7 +40,9 @@ O nosso jogo é um top down shooter tal como dito em cima, onde fizemos a implem
 * E a classe Game1 que já vem com o projeto no monogame ao ser criado.
 
 ### Demonstração
-// mete o video aqui
+
+https://github.com/UniaoEDJD/ShootTheDead/assets/34071970/ddc576e2-9dc7-467b-a958-8bf484f76b3c
+
 
 ### Conclusão
 Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capacidades para futuros trabalhos que possámos vir a realizar no futuro com o uso da framework do Monogame.
