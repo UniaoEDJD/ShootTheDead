@@ -14,6 +14,7 @@ namespace ShootTheDead.States
         private List<Button> components;
         private SpriteFont font;
         private Texture2D buttonTexture;
+        private Texture2D backgroundTexture;
 
         public GameOverState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
@@ -88,6 +89,7 @@ namespace ShootTheDead.States
         {
             font = _content.Load<SpriteFont>("Font");
             buttonTexture = _content.Load<Texture2D>("Button");
+            backgroundTexture = _content.Load<Texture2D>("Background");
         }
 
         public override GameStateType GetStateType()

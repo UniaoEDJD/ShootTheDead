@@ -180,14 +180,14 @@
                         // Have to split a word.
                         // Render line and return start of new line.
                         tempText = t.Substring(start, iCount - start);
-                        spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
+                        spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                         return iCount + 1;
                     }
 
                     // Have a character we can split on.
                     // Render line and return start of new line.
                     tempText = t.Substring(start, breakLocation - start);
-                    spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
+                    spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                     return breakLocation + 1;
                 }
 
@@ -199,7 +199,7 @@
                     case '\n':
                         //Render line and return start of new line.
                         tempText = t.Substring(start, iCount - start);
-                        spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
+                        spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                         return iCount + 1;
                     // These characters are good break locations.
                     case '-':
@@ -212,7 +212,7 @@
             // We hit the end of the text box render line and return
             // _textData.Length so RenderText knows to return.
             tempText = t.Substring(start, box.Text.Length - start);
-            spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
+            spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color, 0, new Vector2(0,0), 1f, SpriteEffects.None, 0);
             return box.Text.Length;
         }
     }

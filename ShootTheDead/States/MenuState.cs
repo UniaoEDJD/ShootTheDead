@@ -69,7 +69,7 @@ namespace ShootTheDead.States
             menuBackGroundTexture = _content.Load<Texture2D>("Background");
 
             viewport = new Rectangle(870, 100, 400, 200);
-            textBox = new TextBox(viewport, 200, "Insert your nickname!",
+            textBox = new TextBox(viewport, 150, "Insert your nickname!",
             _graphicsDevice, font, Color.LightGray, Color.DarkGreen, 30);
         }
 

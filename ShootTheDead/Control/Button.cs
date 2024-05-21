@@ -52,10 +52,10 @@ namespace ShootTheDead.Control
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Rectangle.X + (Rectangle.Width / 2)) - (_font.MeasureString(Text).X / 2);
-                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
+                var x = (Rectangle.X + (Rectangle.Width / 2)) - (_font.MeasureString(Text).X / 3.7f);
+                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 3.7f);
 
-                spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColor);
+                spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColor, 0, new Vector2(0,0), 0.55f, SpriteEffects.None, 0);
             }
         }
 

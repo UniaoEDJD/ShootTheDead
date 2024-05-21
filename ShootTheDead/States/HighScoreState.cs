@@ -11,7 +11,7 @@ namespace ShootTheDead.States
     public class HighscoresState : State
 
     {
-        private List<Component> components;
+        private List<Button> components;
         private ScoreManager scoreManager;
         private SpriteFont font;
 
@@ -29,7 +29,7 @@ namespace ShootTheDead.States
             };
 
             mainMenuButton.Click += Button_MainMenu_Click;
-            components = new List<Component>()
+            components = new List<Button>()
             {
                 mainMenuButton,
             };
@@ -77,7 +77,7 @@ namespace ShootTheDead.States
                 spriteBatch.DrawString(font, "Score: " + scoreText, position, Color.Black);
 
                 // Incrementar a posição para o próximo score
-                position.Y += 20; // Ajuste 20 ou outro valor para espaçamento entre scores
+                position.Y += 70; // Ajuste 20 ou outro valor para espaçamento entre scores
             }
              spriteBatch.End();
         }
