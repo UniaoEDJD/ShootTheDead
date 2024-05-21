@@ -62,12 +62,16 @@ namespace ShootTheDead.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            float scaleX = (float)Globals._virtualWidth / backgroundTexture.Width;
+            float scaleY = (float)Globals._virtualHeight / backgroundTexture.Height;
+
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
+            spriteBatch.Draw(backgroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
             foreach (var component in components)
                 component.Draw(gameTime, spriteBatch);
 
-            spriteBatch.DrawString(font, "Game Over", new Vector2(870, 100), Color.Red);
+            spriteBatch.DrawString(font, "Game Over", new Vector2(800, 100), Color.Red);
 
             spriteBatch.End();
         }
@@ -87,9 +91,9 @@ namespace ShootTheDead.States
 
         public override void LoadContent()
         {
+            backgroundTexture = _content.Load<Texture2D>("Fundo");
             font = _content.Load<SpriteFont>("Font");
             buttonTexture = _content.Load<Texture2D>("Button");
-            backgroundTexture = _content.Load<Texture2D>("Background");
         }
 
         public override GameStateType GetStateType()
