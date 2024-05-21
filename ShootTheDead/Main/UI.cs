@@ -25,7 +25,7 @@ namespace ShootTheDead.Main
         {
             string tmpstring = "zombies killed: " + player.score;
             Vector2 strgDist = Font.MeasureString(tmpstring);
-            _spriteBatch.DrawString(Font, tmpstring, new Vector2(Globals.GAME_WIDTH - strgDist.X - 10, 10), Color.White, 0, new Vector2(0,0), 0.75f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(Font, tmpstring, new Vector2(Globals._virtualWidth - strgDist.X - 10, 10), Color.White, 0, new Vector2(0,0), 0.75f, SpriteEffects.None, 0);
 
             heatlh.Draw(_spriteBatch, new Vector2(10, 10));
         }

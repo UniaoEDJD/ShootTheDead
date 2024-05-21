@@ -64,9 +64,9 @@ namespace ShootTheDead.Managers
         {
 
             //draw background
-            for (int i = 0; i < Globals.GAME_WIDTH; i += Globals.TileSize)
+            for (int i = 0; i < Globals._virtualWidth; i += Globals.TileSize)
             {
-                for (int j = 0; j < Globals.GAME_HEIGHT; j += Globals.TileSize)
+                for (int j = 0; j < Globals._virtualHeight; j += Globals.TileSize)
                 {
                     spriteBatch.Draw(text, new Vector2(i, j), xxyy[2], Color.White);
                 }

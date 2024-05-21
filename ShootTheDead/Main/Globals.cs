@@ -21,9 +21,8 @@ namespace ShootTheDead
     {
         public static int TileSize = 64;
         public static float deltaTime;
-        public static int scale = 120;
-        public static int GAME_WIDTH = 16 * scale;
-        public static int GAME_HEIGHT = 9 * scale;
+        public static int GAME_WIDTH = 1920;
+        public static int GAME_HEIGHT = 1080;
         
         public static Point Bounds { get; set; }
         public static int _virtualWidth = 1920;

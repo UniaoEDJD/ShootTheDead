@@ -24,7 +24,7 @@ namespace ShootTheDead.States
 
             var mainMenuButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(40, Globals.GAME_HEIGHT - 100),
+                Position = new Vector2(40, Globals._virtualHeight - 100),
                 Text = "Back To Main Menu",
             };
 
