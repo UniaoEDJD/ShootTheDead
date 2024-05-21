@@ -57,7 +57,7 @@ namespace ShootTheDead.States
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            _game.Exit();
+            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

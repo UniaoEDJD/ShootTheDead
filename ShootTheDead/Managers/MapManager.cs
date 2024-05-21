@@ -39,6 +39,16 @@ namespace ShootTheDead.Managers
                     player.sPosition = prevPos;
                 }
             }
+            foreach (var bullet in player.Bullets.ToList())
+            {
+                foreach (var rect in map.colliders)
+                {
+                    if (bullet.bulletRect.Intersects(rect))
+                    {
+                        player.Bullets.RemoveAll((bullet) => bullet.bulletRect.Intersects(rect));
+                    }
+                }
+            }
         }
 
         public void LoadMap(string levelFile)

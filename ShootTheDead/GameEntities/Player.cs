@@ -1,8 +1,4 @@
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using ShootTheDead.GameEntities;
-using ShootTheDead.Main;
-using System.Diagnostics;
+
 
 namespace ShootTheDead
 {
@@ -15,20 +11,15 @@ namespace ShootTheDead
         public bool Reloading { get; protected set; }
         private float Speed = 300;
         public Rectangle playerRect;
-        private Map map = new Map();
         private bool isMoving;
         public int Health { get; private set; } = 5;
         public bool isDead { get; set; }
         public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
         public bool isTakingDamage { get; private set; } = false;
         private Texture2D bulletTexture;
-        private bool isShooting = false;
         public int score;
         SoundEffect shoot;
-        Game1 _game;
-        GraphicsDevice _graphicsDevice;
-        ContentManager _content;
-        Texture2D tex;
+        static SoundEffect hurt;
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -40,14 +31,14 @@ namespace ShootTheDead
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
-            tex = content.Load<Texture2D>("solid");
             bulletTexture = content.Load<Texture2D>("bullet");
             AddAnimation(20);
             cooldown = 1;
             cooldownLeft = cooldown;
-            var speedScale = 2 * (Globals.scaleX / Globals.scaleY);
+            var speedScale = 1.2 * (Globals.scaleX);
             Speed *= (int)speedScale;
             shoot = content.Load<SoundEffect>("Sfx/laserShoot");
+            hurt = content.Load<SoundEffect>("Sfx/oof");
         }
 
         public void Shoot()
@@ -109,6 +100,7 @@ namespace ShootTheDead
         public void TakeDamage(int damage)
         {
             Health -= damage;
+            hurt.Play();
             if (Health <= 0)
             {
                 isDead = true;

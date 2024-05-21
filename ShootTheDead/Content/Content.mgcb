@@ -80,6 +80,12 @@
 /processorParam:Quality=Best
 /build:Sfx/laserShoot.wav
 
+#begin Sfx/oof.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sfx/oof.wav
+
 #begin shade.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -91,18 +97,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:shade.png
-
-#begin skeleton-attack_.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:skeleton-attack_.png
 
 #begin skeleton-move_.png
 /importer:TextureImporter
