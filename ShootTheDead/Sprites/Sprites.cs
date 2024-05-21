@@ -23,7 +23,7 @@ namespace ShootTheDead
         public Sprite(Vector2 pos, Texture2D tex)
         {
             sPosition = pos;
-            sTexture = tex ?? throw new ArgumentNullException(nameof(tex), "Texture cannot be null.");
+            sTexture = tex;
             origin = new Vector2(tex.Width / 2, tex.Height / 2);
             frameIndex = 0;
             TimeElapsed = 0;
@@ -31,11 +31,6 @@ namespace ShootTheDead
 
         public virtual void Initialize()
         {
-            if (sTexture == null)
-            {
-                throw new ArgumentNullException(nameof(sTexture), "Texture cannot be null.");
-            }
-
             // Initialize other properties if needed
         }
 
@@ -53,10 +48,6 @@ namespace ShootTheDead
 
         public virtual void Update(GameTime gameTime)
         {
-            if (sRectangles == null || sRectangles.Length == 0)
-            {
-                throw new InvalidOperationException("Animation frames are not initialized.");
-            }
 
             TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -77,11 +68,6 @@ namespace ShootTheDead
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (sTexture == null || sRectangles == null || sRectangles.Length == 0)
-            {
-                throw new InvalidOperationException("Sprite cannot be drawn because it is not properly initialized.");
-            }
-
             spriteBatch.Draw(sTexture,
                 sPosition,
                 sRectangles[frameIndex],
