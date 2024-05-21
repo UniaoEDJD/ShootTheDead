@@ -61,8 +61,6 @@ namespace ShootTheDead.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
-
-
             // Desenha o background e o mapa
             mapManager.Draw(spriteBatch);
             // Desenha o jogador
