@@ -30,12 +30,18 @@ namespace ShootTheDead.States
            : base(game, graphicsDevice, content)
         {
             mapManager = new MapManager();
+            
+        }
+
+        public override GameStateType GetStateType()
+        {
+            return GameStateType.Play;
         }
 
         public override void LoadContent()
         {
             // Create a new GraphicsDeviceManager
-
+            
             ui = new UI(_content);
             mapManager.Initialize();
             mapManager.LoadContent(_content);
@@ -62,22 +68,13 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
-            Globals.Update(gameTime);
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-                scoreManager.AddScore(new Main.Score()
-                {
-                    playerName = "Player",
-                    playerScore = player.score
-                });
+            KeyboardState state = Keyboard.GetState();
 
-                ScoreManager.SaveScore(scoreManager);
-                Exit();
-            }
+            Globals.Update(gameTime);
+
+
             ui.Update(player.Health, 5);
             var prevPos = player.sPosition;
-            // Atualiza o player
             player.Update(gameTime);
             EnemyManager.Update(player, gameTime);
             mapManager.Update(player, prevPos);
@@ -91,7 +88,7 @@ namespace ShootTheDead.States
 
                 ScoreManager.SaveScore(scoreManager);
 
-                Exit();
+               
             }
         }
 

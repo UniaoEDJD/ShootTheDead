@@ -4,12 +4,15 @@ global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
 global using Microsoft.Xna.Framework.Content;
+global using ShootTheDead.Main;
 global using System.Collections.Generic;
 global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Xml;
+global using ShootTheDead.Managers;
+global using ShootTheDead.States;
 using System.Reflection.Metadata;
 
 namespace ShootTheDead
@@ -20,17 +23,22 @@ namespace ShootTheDead
         public static float deltaTime;
         public static int GAME_WIDTH = 1920;
         public static int GAME_HEIGHT = 1080;
+        
         public static Point Bounds { get; set; }
-        private static int _virtualWidth = 1920;
-        private static int _virtualHeight = 1080;
+        public static int _virtualWidth = 1920;
+        public static int _virtualHeight = 1080;
         public static Viewport _viewport;
         public static Matrix _screenScaleMatrix;
+
 
         public static void Update(GameTime gameTime)
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
-
+        public static Vector2 TransformMouse(Vector2 mousePosition)
+        {
+            return Vector2.Transform(mousePosition, Matrix.Invert(_screenScaleMatrix));
+        }
         public static void updateScreenScaleMatrix(GraphicsDevice graphicsDevice)
         {
             float screenHeight = graphicsDevice.PresentationParameters.BackBufferHeight;

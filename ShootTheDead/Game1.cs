@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using ShootTheDead.GameEntities;
-using ShootTheDead.Main;
-using ShootTheDead.Managers;
-using ShootTheDead.States;
+﻿using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using static ShootTheDead.States.State;
 
 namespace ShootTheDead
 {
@@ -17,12 +14,13 @@ namespace ShootTheDead
 
         public Game1()
         {
+            Debug.WriteLine("Game1 constructor");
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnClientSizeChanged;
-            
+            graphics.IsFullScreen = false;
         }
 
         private void OnClientSizeChanged(object sender, EventArgs e)
@@ -31,18 +29,22 @@ namespace ShootTheDead
             {
                 _isResizing = true;
                 Globals.updateScreenScaleMatrix(GraphicsDevice);
+                Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
                 _isResizing = false;
             }
         }
 
+
         public void OnResize(Object sender, EventArgs e)
         {
+            
             if ((graphics.PreferredBackBufferWidth != graphics.GraphicsDevice.Viewport.Width) ||
                 (graphics.PreferredBackBufferHeight != graphics.GraphicsDevice.Viewport.Height))
             {
                 graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.Viewport.Width;
                 graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.Viewport.Height;
                 graphics.ApplyChanges();
+                
             }
         }
 
@@ -53,6 +55,7 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
             Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
             graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
             graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
@@ -72,21 +75,32 @@ namespace ShootTheDead
             _currentState = new MenuState(this, GraphicsDevice, Content);
             _currentState.LoadContent();
             _nextState = null;
+            UpdateWindowProperties();
         }
 
         protected override void Update(GameTime gameTime)
-        { 
-            if(_nextState != null)
+        {
+             
+            if (_nextState != null)
             {
                 _currentState = _nextState;
-                _currentState.LoadContent();
-
+                _currentState.LoadContent();  
                 _nextState = null;
+                UpdateWindowProperties();
             }
             _currentState.Update(gameTime);
-            
-            
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {                 graphics.ToggleFullScreen();
+                       }
+
             base.Update(gameTime);
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -98,7 +112,19 @@ namespace ShootTheDead
             base.Draw(gameTime);
         }
 
-
+        private void UpdateWindowProperties()
+        {
+            switch (_currentState.GetStateType())
+            {
+                case GameStateType.Menu:
+                    Window.AllowUserResizing = true;
+                    break;
+                case GameStateType.Play:
+                    Window.AllowUserResizing = true;
+                    break;
+                    // Add other cases as needed
+            }
+        }
 
     }
 }

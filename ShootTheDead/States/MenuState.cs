@@ -7,7 +7,7 @@ namespace ShootTheDead.States
 {
     public class MenuState : State
     {
-        private List<Control.Component> components;
+        private List<Button> components;
 
         private Texture2D menuBackGroundTexture;
 
@@ -15,12 +15,13 @@ namespace ShootTheDead.States
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
         {
+            
             var buttonTexture = _content.Load<Texture2D>("Button");
             var buttonFont = _content.Load<SpriteFont>("Font");
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 200),
+                Position = new Vector2(Globals._virtualWidth / 2 - 20, Globals._virtualHeight/2),
                 Text = "New Game",
             };
 
@@ -28,13 +29,13 @@ namespace ShootTheDead.States
 
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 250),
+                Position = new Vector2(Globals._virtualWidth / 2 - 20, Globals._virtualHeight / 2 + 50),
                 Text = "Quit Game",
             };
 
             quitGameButton.Click += Button_Quit_Clicked;
 
-            components = new List<Control.Component>()
+            components = new List<Button>()
             {
                 newGameButton,
                 quitGameButton,
@@ -42,8 +43,14 @@ namespace ShootTheDead.States
 
         }
 
-        public override void LoadContent()
+        public override GameStateType GetStateType()
         {
+            return GameStateType.Menu;
+        }
+
+
+        public override void LoadContent()
+        {  
             menuBackGroundTexture = _content.Load<Texture2D>("Background");
         }
 
@@ -59,6 +66,10 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
+            components[0].Position.X = Globals._virtualWidth / 2 - 20;
+            components[0].Position.Y = Globals._virtualHeight / 2;
+            components[1].Position.X = Globals._virtualWidth / 2 - 20;
+            components[1].Position.Y = Globals._virtualHeight / 2 + 50;
             foreach (var component in components)
                 component.Update(gameTime);
         }
@@ -69,11 +80,20 @@ namespace ShootTheDead.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix);
-            spriteBatch.Draw(menuBackGroundTexture, new Vector2(0, 0), Color.White);
+            float scaleX = (float)Globals._virtualWidth / menuBackGroundTexture.Width;
+            float scaleY = (float)Globals._virtualHeight / menuBackGroundTexture.Height;
+
+            spriteBatch.Begin();
+            // Calculate scaling facto
+
+            // Draw background texture with scaling
+            spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
 
             foreach (var component in components)
-                component.Draw(gameTime, spriteBatch);
+                { component.Draw(gameTime, spriteBatch); 
+                  
+                }
+                
             spriteBatch.End();
 
         }

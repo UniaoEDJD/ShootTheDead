@@ -25,6 +25,7 @@ namespace ShootTheDead
         private float cool = 3;
         public int score;
         SoundEffect shoot;
+  
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -40,6 +41,7 @@ namespace ShootTheDead
             AddAnimation(20);
             cooldown = 1;
             cooldownLeft = cooldown;
+           
             shoot = content.Load<SoundEffect>("Sfx/laserShoot");
         }
 
@@ -54,10 +56,12 @@ namespace ShootTheDead
 
         public override void Update(GameTime gameTime)
         {
-            HandleInput(Keyboard.GetState(), gameTime);
+            KeyboardState state = Keyboard.GetState();
             // Obt�m a posi��o do mouse
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
+           // Vector2 transformedMousePosition = Globals.TransformMouse(mousePosition);
+            HandleInput(state ,gameTime);
 
             // Calcula a dire��o entre o jogador e o mouse
             Vector2 direction = mousePosition - sPosition;
@@ -101,33 +105,37 @@ namespace ShootTheDead
 
             Debug.WriteLine("Player Health: " + Health);
         }
-
-        public void HandleInput(KeyboardState keyState, GameTime gameTime)
+        
+        public void HandleInput(KeyboardState state,GameTime gameTime)
         {
             isMoving = false;
-
-            if (keyState.IsKeyDown(Keys.W))
+            
+            if (state.IsKeyDown(Keys.W))
             {
+                
                 sPosition.Y -= Speed * Globals.deltaTime;
                 isMoving = true;
             }
-            if (keyState.IsKeyDown(Keys.A))
+            if (state.IsKeyDown(Keys.A))
             {
+               
                 sPosition.X -= Speed * Globals.deltaTime;
                 isMoving = true;
             }
-            if (keyState.IsKeyDown(Keys.S))
+            if (state.IsKeyDown(Keys.S))
             {
+               
                 sPosition.Y += Speed * Globals.deltaTime;
                 isMoving = true;
             }
-            if (keyState.IsKeyDown(Keys.D))
+            if (state.IsKeyDown(Keys.D))
             {
+               
                 sPosition.X += Speed * Globals.deltaTime;
                 isMoving = true;
             }
-            playerRect.X = (int)sPosition.X;
-            playerRect.Y = (int)sPosition.Y;
+            playerRect.X = (int)sPosition.X - 25;
+            playerRect.Y = (int)sPosition.Y - 25;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -144,6 +152,7 @@ namespace ShootTheDead
                 SpriteEffects.None,
                 0f
             );
+
             foreach (var bullet in Bullets)
             {
                 bullet.Draw(spriteBatch);
