@@ -4,7 +4,8 @@
 
 ### Descrição
 Shoot The Dead é um jogo do estilo de Topdown Shooter que é um jogo endless onde não há limite de spawn de Zombies até o jogador morrer.
-// mete a imagem aqui
+![Background](https://github.com/UniaoEDJD/ShootTheDead/assets/150021756/9bf57dfd-ce06-45aa-b8ad-e76680c0c1c3)
+
 
 ### Controles do Jogo
  - W: Andar para frente
