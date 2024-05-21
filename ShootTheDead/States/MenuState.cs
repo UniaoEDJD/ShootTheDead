@@ -167,11 +167,11 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
-            components[0].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2);
-            components[1].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 50);
-            components[2].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 100);
-            components[3].Position = new Vector2(Globals.GAME_WIDTH / 2 + 190, Globals.GAME_HEIGHT / 2 + 200);
-            components[4].Position = new Vector2(Globals.GAME_WIDTH / 2 - 384, Globals.GAME_HEIGHT / 2 + 200);
+            components[0].Position = new Vector2(Globals.GAME_WIDTH / 2 - 130, Globals.GAME_HEIGHT / 2);
+            components[1].Position = new Vector2(Globals.GAME_WIDTH / 2 - 130, Globals.GAME_HEIGHT / 2 + 50);
+            components[2].Position = new Vector2(Globals.GAME_WIDTH / 2 - 130, Globals.GAME_HEIGHT / 2 + 100);
+            components[3].Position = new Vector2(Globals.GAME_WIDTH / 2 + 125, Globals.GAME_HEIGHT / 2 + 200);
+            components[4].Position = new Vector2(Globals.GAME_WIDTH / 2 - 379, Globals.GAME_HEIGHT / 2 + 200);
             foreach (var component in components)
                 component.Update(gameTime);
             KeyboardInput.Update();
@@ -200,7 +200,7 @@ namespace ShootTheDead.States
 
             // Draw background texture with scaling
             spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
-            spriteBatch.DrawString(fonte, $"{Globals.GAME_WIDTH} x {Globals.GAME_HEIGHT}", new Vector2(Globals.GAME_WIDTH / 2 - 114, Globals.GAME_HEIGHT / 2 + 200), Color.White);
+            spriteBatch.DrawString(fonte, $"{Globals.GAME_WIDTH} x {Globals.GAME_HEIGHT}", new Vector2(Globals.GAME_WIDTH / 2 - 139, Globals.GAME_HEIGHT / 2 + 200), Color.White);
             textBox.Draw(spriteBatch);
             foreach (var component in components)
             { 

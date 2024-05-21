@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using ShootTheDead.Managers;
 using ShootTheDead.States;
 using System.Diagnostics;
@@ -10,9 +11,11 @@ namespace ShootTheDead
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private bool _isResizing;
         private State _currentState;
         private State _nextState;
+        private Color color;
+        private Song backgroundMusic;
+       
         public static Game1 Instance { get; private set; }
 
         public Game1()
@@ -46,6 +49,7 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            
             KeyboardInput.Initialize(this, 500f, 20);
             Debug.WriteLine($"{Globals.GAME_HEIGHT} {Globals.GAME_WIDTH}");
             Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
@@ -62,6 +66,10 @@ namespace ShootTheDead
 
         protected override void LoadContent()
         {
+            backgroundMusic = Content.Load<Song>("Sfx/creepymusic");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Play(backgroundMusic);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _currentState = new MenuState(this, GraphicsDevice, Content);
             _currentState.LoadContent();
@@ -92,11 +100,21 @@ namespace ShootTheDead
             {
                 Exit();
             }
+
+            switch(_currentState.GetStateType())
+            {
+                case GameStateType.HighScore:
+                    color = Color.Black;
+                    break;
+                default:
+                    color = Color.White;
+                    break;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(color);
             
             _currentState.Draw(gameTime, spriteBatch);
             GraphicsDevice.Viewport = Globals._viewport;
