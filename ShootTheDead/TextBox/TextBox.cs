@@ -1,4 +1,6 @@
-﻿namespace ShootTheDead
+﻿using System;
+
+namespace ShootTheDead
 {
 
     public class TextBox

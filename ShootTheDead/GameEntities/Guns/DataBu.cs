@@ -1,4 +1,11 @@
-﻿namespace ShootTheDead.GameEntities.Guns
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace ShootTheDead.GameEntities.Guns
 {
     public sealed class DataBu
     {

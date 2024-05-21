@@ -1,4 +1,11 @@
-﻿namespace ShootTheDead.GameEntities
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using ShootTheDead.Sprites;
+using System;
+using System.Collections.Generic;
+
+namespace ShootTheDead.GameEntities
 {
     public class Enemy : AnimatedSprite
     {
