@@ -28,7 +28,7 @@ namespace ShootTheDead
         Game1 _game;
         GraphicsDevice _graphicsDevice;
         ContentManager _content;
-
+        Texture2D tex;
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -40,11 +40,13 @@ namespace ShootTheDead
         public void LoadContent(ContentManager content)
         {
             sTexture = content.Load<Texture2D>("survivor-move_handgun");
+            tex = content.Load<Texture2D>("solid");
             bulletTexture = content.Load<Texture2D>("bullet");
             AddAnimation(20);
             cooldown = 1;
             cooldownLeft = cooldown;
-           
+            var speedScale = 2 * (Globals.scaleX / Globals.scaleY);
+            Speed *= (int)speedScale;
             shoot = content.Load<SoundEffect>("Sfx/laserShoot");
         }
 
@@ -65,6 +67,7 @@ namespace ShootTheDead
 
         public override void Update(GameTime gameTime)
         {
+            
             KeyboardState state = Keyboard.GetState();
             // Obt�m a posi��o do mouse
             MouseState mouseState = Mouse.GetState();
@@ -139,8 +142,8 @@ namespace ShootTheDead
                 sPosition.X += Speed * Globals.deltaTime;
                 isMoving = true;
             }
-            playerRect.X = (int)sPosition.X - 25;
-            playerRect.Y = (int)sPosition.Y - 25;
+            playerRect.X = ((int)sPosition.X - 25);
+            playerRect.Y = ((int)sPosition.Y - 25);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -157,6 +160,7 @@ namespace ShootTheDead
                 SpriteEffects.None,
                 0f
             );
+
 
             foreach (var bullet in Bullets)
             {

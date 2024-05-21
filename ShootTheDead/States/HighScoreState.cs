@@ -61,7 +61,7 @@ namespace ShootTheDead.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals._screenScaleMatrix);
 
             foreach (var component in components)
                 component.Draw(gameTime, spriteBatch);

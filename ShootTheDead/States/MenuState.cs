@@ -27,7 +27,7 @@ namespace ShootTheDead.States
 
             var newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight/2),
+                Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2),
                 Text = "New Game",
             };
 
@@ -35,7 +35,7 @@ namespace ShootTheDead.States
 
             var HighScoreButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 50),
+                Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 50),
                 Text = "HighScore",
             };
 
@@ -43,13 +43,13 @@ namespace ShootTheDead.States
 
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 100),
+                Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 100),
                 Text = "Quit Game",
             };
 
             var resUpButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 + 190, Globals._virtualHeight / 2 + 200),
+                Position = new Vector2(Globals.GAME_WIDTH / 2 + 190, Globals.GAME_HEIGHT / 2 + 200),
                 Text = "Res +",
             };
 
@@ -57,7 +57,7 @@ namespace ShootTheDead.States
 
             var resDownButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 - 384, Globals._virtualHeight / 2 + 200),
+                Position = new Vector2(Globals.GAME_WIDTH / 2 - 384, Globals.GAME_HEIGHT / 2 + 200),
                 Text = "Res -",
             };
 
@@ -80,53 +80,56 @@ namespace ShootTheDead.States
 
         private void Button_ResDown_Click(object sender, EventArgs e)
         {
-            if (Globals._virtualWidth > 1920 && Globals._virtualHeight > 1080)
+            if (Globals.GAME_WIDTH > 1920 && Globals.GAME_HEIGHT > 1080)
             {
-                Globals._virtualWidth = 16 * (Globals._virtualWidth / 16 - 40);
-                Globals._virtualHeight = 9 * (Globals._virtualHeight / 9 - 40);
-                if (Globals._virtualWidth > 2560 && Globals._virtualHeight > 1440)
+                Globals.GAME_WIDTH = 16 * (Globals.GAME_WIDTH / 16 - 40);
+                Globals.GAME_HEIGHT = 9 * (Globals.GAME_HEIGHT / 9 - 40);
+                if (Globals.GAME_WIDTH > 2560 && Globals.GAME_HEIGHT > 1440)
                 {
-                    Globals._virtualWidth = 16 * (Globals._virtualWidth / 16 - 80);
-                    Globals._virtualHeight = 9 * (Globals._virtualHeight / 9 - 80);
+                    Globals.GAME_WIDTH = 16 * (Globals.GAME_WIDTH / 16 - 80);
+                    Globals.GAME_HEIGHT = 9 * (Globals.GAME_HEIGHT / 9 - 80);
                 }
             }
             else
             {
-                Globals._virtualWidth = 16 * (Globals._virtualWidth / 16 - 20);
-                Globals._virtualHeight = 9 * (Globals._virtualHeight / 9 - 20);
-                Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
-                if (Globals._virtualWidth < 1280 && Globals._virtualHeight < 720)
+                Globals.GAME_WIDTH = 16 * (Globals.GAME_WIDTH / 16 - 20);
+                Globals.GAME_HEIGHT = 9 * (Globals.GAME_HEIGHT / 9 - 20);
+                Debug.WriteLine($"{Globals.GAME_HEIGHT} {Globals.GAME_WIDTH}");
+                if (Globals.GAME_WIDTH < 1280 && Globals.GAME_HEIGHT < 720)
                 {
-                    Globals._virtualWidth = 1280;
-                    Globals._virtualHeight = 720;
+                    Globals.GAME_WIDTH = 1280;
+                    Globals.GAME_HEIGHT = 720;
                 }
             }
-            Game1.Instance.OnClientSizeChanged();
+            Game1.Instance.OnResize1();
+            
         }
 
         private void Button_ResUp_Click(object sender, EventArgs e)
         {
-            if (Globals._virtualWidth == 1920 && Globals._virtualHeight == 1080 || Globals._virtualWidth == 2560 && Globals._virtualHeight == 1440)
+            if (Globals.GAME_WIDTH >= 1920 && Globals.GAME_HEIGHT >= 1080)
             {
-                Globals._virtualWidth = 16 * (Globals._virtualWidth / 16 + 40);
-                Globals._virtualHeight = 9 * (Globals._virtualHeight / 9 + 40);
-                if (Globals._virtualWidth > 2560 && Globals._virtualHeight > 1440)
+                Globals.GAME_WIDTH = 16 * (Globals.GAME_WIDTH / 16 + 40);
+                Globals.GAME_HEIGHT = 9 * (Globals.GAME_HEIGHT / 9 + 40);
+                if (Globals.GAME_WIDTH > 2560 && Globals.GAME_HEIGHT > 1440)
                 {
-                    Globals._virtualWidth = 3840;
-                    Globals._virtualHeight = 2160;
+                    Globals.GAME_WIDTH = 3840;
+                    Globals.GAME_HEIGHT = 2160;
                 }
 
             }
             else
-            {Globals._virtualWidth = 16 * (Globals._virtualWidth / 16 + 20);
-             Globals._virtualHeight = 9 * (Globals._virtualHeight / 9 + 20);
-                if (Globals._virtualWidth > 2560 && Globals._virtualHeight > 1440)
+            {Globals.GAME_WIDTH = 16 * (Globals.GAME_WIDTH / 16 + 20);
+             Globals.GAME_HEIGHT = 9 * (Globals.GAME_HEIGHT / 9 + 20);
+                if (Globals.GAME_WIDTH > 2560 && Globals.GAME_HEIGHT > 1440)
                 {
-                    Globals._virtualWidth = 3840;
-                    Globals._virtualHeight = 2160;
+                    Globals.GAME_WIDTH = 3840;
+                    Globals.GAME_HEIGHT = 2160;
                 }
             }
-            Game1.Instance.OnClientSizeChanged();
+            Game1.Instance.OnResize1();
+
+            
         }
 
         public override GameStateType GetStateType()
@@ -164,11 +167,11 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
-            components[0].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2);
-            components[1].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 50);
-            components[2].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 100);
-            components[3].Position = new Vector2(Globals._virtualWidth / 2 + 190, Globals._virtualHeight / 2 + 200);
-            components[4].Position = new Vector2(Globals._virtualWidth / 2 - 384, Globals._virtualHeight / 2 + 200);
+            components[0].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2);
+            components[1].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 50);
+            components[2].Position = new Vector2(Globals.GAME_WIDTH / 2 - 100, Globals.GAME_HEIGHT / 2 + 100);
+            components[3].Position = new Vector2(Globals.GAME_WIDTH / 2 + 190, Globals.GAME_HEIGHT / 2 + 200);
+            components[4].Position = new Vector2(Globals.GAME_WIDTH / 2 - 384, Globals.GAME_HEIGHT / 2 + 200);
             foreach (var component in components)
                 component.Update(gameTime);
             KeyboardInput.Update();
@@ -189,15 +192,15 @@ namespace ShootTheDead.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float scaleX = (float)Globals._virtualWidth / menuBackGroundTexture.Width;
-            float scaleY = (float)Globals._virtualHeight / menuBackGroundTexture.Height;
+            float scaleX = (float)Globals.GAME_WIDTH / menuBackGroundTexture.Width;
+            float scaleY = (float)Globals.GAME_HEIGHT / menuBackGroundTexture.Height;
 
             spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix);
             // Calculate scaling facto
 
             // Draw background texture with scaling
             spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
-            spriteBatch.DrawString(fonte, $"{Globals._virtualWidth} x {Globals._virtualHeight}", new Vector2(Globals._virtualWidth / 2 - 114, Globals._virtualHeight / 2 + 200), Color.White);
+            spriteBatch.DrawString(fonte, $"{Globals.GAME_WIDTH} x {Globals.GAME_HEIGHT}", new Vector2(Globals.GAME_WIDTH / 2 - 114, Globals.GAME_HEIGHT / 2 + 200), Color.White);
             textBox.Draw(spriteBatch);
             foreach (var component in components)
             { 

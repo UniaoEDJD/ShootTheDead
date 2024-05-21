@@ -23,7 +23,12 @@ namespace ShootTheDead
         public static float deltaTime;
         public static int GAME_WIDTH = 1920;
         public static int GAME_HEIGHT = 1080;
-        
+        public static int baseWidth = 1920;
+        public static int baseHeight = 1080;
+        public static int currentWidth;
+        public static int currentHeight;
+        public static float scaleX;
+        public static float scaleY;
         public static Point Bounds { get; set; }
         public static int _virtualWidth = 1920;
         public static int _virtualHeight = 1080;
@@ -35,6 +40,10 @@ namespace ShootTheDead
         public static void Update(GameTime gameTime)
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Globals.currentWidth = Globals.GAME_WIDTH;
+            Globals.currentHeight = Globals.GAME_HEIGHT;
+            Globals.scaleX = (float)Globals.currentWidth / (float)Globals.baseWidth;
+            Globals.scaleY = (float)Globals.currentHeight / (float)Globals.baseHeight;
         }
         public static Vector2 TransformMouse(Vector2 mousePosition)
         {

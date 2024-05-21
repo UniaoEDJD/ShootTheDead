@@ -17,8 +17,11 @@ namespace ShootTheDead.Main
         public List<Rectangle> colliders;
 
 
+
         public void LoadMap(string levelFile)
         {
+
+
             tiles = new List<Vector2>();
             colliders = new List<Rectangle>();
             string[] linhas = File.ReadAllLines($"Content/{levelFile}");
@@ -31,8 +34,9 @@ namespace ShootTheDead.Main
             {
                 for (int y = 0; y < lineCount; y++)
                 {
-                    position.X = x * tileSize;
-                    position.Y = y * tileSize;
+                    Debug.WriteLine($"{Globals.scaleX} {Globals.scaleY}");
+                    position.X = x * tileSize * Globals.scaleX;
+                    position.Y = y * tileSize * Globals.scaleY;
 
                     if (linhas[y][x] == '1')
                     {
@@ -53,29 +57,38 @@ namespace ShootTheDead.Main
 
         public void drawMap(SpriteBatch _spriteBatch, Texture2D text, Rectangle rect1, Rectangle rect2, Rectangle rect3)
         {
-            Height = 1920;
-            Width = 1080;
+            // Define the base resolution
+
+
+            // Calculate the scaling factors
+         
             Vector2 position = new Vector2();
+
             for (int x = 0; x < map.GetLength(0); x++)
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    position.X = x * tileSize;
-                    position.Y = y * tileSize;
+                    position.X = x * tileSize * Globals.scaleX; // Apply the X scaling factor
+                    position.Y = y * tileSize * Globals.scaleY; // Apply the Y scaling factor
+
+                    Rectangle scaledRect = new Rectangle((int)position.X, (int)position.Y, (int)(tileSize * Globals.scaleX), (int)(tileSize * Globals.scaleY));
+
                     switch (map[x, y])
                     {
                         case '0':
-                            _spriteBatch.Draw(text, position, rect1, Color.White);
+                            _spriteBatch.Draw(text, scaledRect, rect1, Color.White);
                             break;
                         case '1':
-                            _spriteBatch.Draw(text, position, rect2, Color.White);
+                            _spriteBatch.Draw(text, scaledRect, rect2, Color.White);
                             break;
                         case '2':
-                            _spriteBatch.Draw(text, position, rect3, Color.White);
+                            _spriteBatch.Draw(text, scaledRect, rect3, Color.White);
                             break;
+
                     }
                 }
             }
+            
         }
 
     }

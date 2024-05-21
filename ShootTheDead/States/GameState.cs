@@ -30,7 +30,6 @@ namespace ShootTheDead.States
            : base(game, graphicsDevice, content)
         {
             mapManager = new MapManager();
-            
         }
 
         public override GameStateType GetStateType()
@@ -62,11 +61,13 @@ namespace ShootTheDead.States
         {
             spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
             // Desenha o background e o mapa
+            
             mapManager.Draw(spriteBatch);
             // Desenha o jogador
             player.Draw(spriteBatch);
             EnemyManager.Draw(spriteBatch);
             ui.Draw(spriteBatch, player, font);
+            
             spriteBatch.End();
         }
 
@@ -92,6 +93,7 @@ namespace ShootTheDead.States
                 _game.ChangeState(new GameOverState(_game, _graphicsDevice, _content));
                 Restart();
             }
+            
 
         }
 

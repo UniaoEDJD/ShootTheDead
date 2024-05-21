@@ -21,32 +21,22 @@ namespace ShootTheDead
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //Window.AllowUserResizing = true;
             graphics.IsFullScreen = false;
             Instance = this;
         }
 
-        public void OnClientSizeChanged()
+
+
+
+
+        public void OnResize1()
         {
-            graphics.PreferredBackBufferWidth = Globals._virtualWidth;
-            graphics.PreferredBackBufferHeight = Globals._virtualHeight;
-            Globals.GAME_WIDTH = Globals._virtualWidth;
-            Globals.GAME_HEIGHT = Globals._virtualHeight;
+            graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
+            graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
+
             Globals.updateScreenScaleMatrix(GraphicsDevice);
 
-            Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
-        }
-
-        public void OnResize(Object sender, EventArgs e)
-        {
-            if ((graphics.PreferredBackBufferWidth != graphics.GraphicsDevice.Viewport.Width) ||
-                (graphics.PreferredBackBufferHeight != graphics.GraphicsDevice.Viewport.Height))
-            {
-                graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.Viewport.Width;
-                graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.Viewport.Height;
-                graphics.ApplyChanges();
-            }
         }
 
         public void ChangeState(State state)
@@ -57,10 +47,10 @@ namespace ShootTheDead
         protected override void Initialize()
         {
             KeyboardInput.Initialize(this, 500f, 20);
-            Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
-            Globals.Bounds = new(Globals._virtualWidth, Globals._virtualHeight);
-            graphics.PreferredBackBufferWidth = Globals._virtualWidth;
-            graphics.PreferredBackBufferHeight = Globals._virtualHeight;
+            Debug.WriteLine($"{Globals.GAME_HEIGHT} {Globals.GAME_WIDTH}");
+            Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
+            graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
+            graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -76,17 +66,18 @@ namespace ShootTheDead
             _currentState = new MenuState(this, GraphicsDevice, Content);
             _currentState.LoadContent();
             _nextState = null;
-            UpdateWindowProperties();
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
+            Globals.Update(gameTime);
             if (_nextState != null)
             {
                 _currentState = _nextState;
                 _currentState.LoadContent();
                 _nextState = null;
-                UpdateWindowProperties();
+                
             }
             _currentState.Update(gameTime);
 
@@ -106,32 +97,10 @@ namespace ShootTheDead
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            GraphicsDevice.Viewport = Globals._viewport;
+            
             _currentState.Draw(gameTime, spriteBatch);
+            GraphicsDevice.Viewport = Globals._viewport;
             base.Draw(gameTime);
-        }
-
-        private void UpdateWindowProperties()
-        {
-            switch (_currentState.GetStateType())
-            {
-                case GameStateType.Menu:
-                    Window.AllowUserResizing = true;
-                    break;
-
-                case GameStateType.Play:
-                    Window.AllowUserResizing = true;
-                    break;
-
-                case GameStateType.HighScore:
-                    Window.AllowUserResizing = true;
-                    break;
-
-                case GameStateType.GameOver:
-                    Window.AllowUserResizing = true;
-                    break;
-                    // Add other cases as needed
-            }
         }
     }
 }

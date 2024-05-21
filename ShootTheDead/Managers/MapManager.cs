@@ -9,6 +9,7 @@ namespace ShootTheDead.Managers
     {
         Map map;
         Texture2D text;
+        Texture2D tex;
         Rectangle[] xxyy;
         public MapManager()
         {
@@ -21,7 +22,7 @@ namespace ShootTheDead.Managers
             map.LoadMap("level1.txt");
             foreach (var o in map.tiles)
             {
-                map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, Globals.TileSize, Globals.TileSize));
+                map.colliders.Add(new Rectangle((int)o.X, (int)o.Y, (int)(Globals.TileSize * Globals.scaleX), (int)(Globals.TileSize * Globals.scaleY)));
             }
         }
         public Texture2D getTexture(string textureName, ContentManager Content)
@@ -53,6 +54,7 @@ namespace ShootTheDead.Managers
         public void LoadContent(ContentManager Content)
         {
             text = getTexture("tiles", Content);
+            tex = Content.Load<Texture2D>("solid");
             xxyy[0] = new Rectangle(384, 320, Globals.TileSize, Globals.TileSize);
             xxyy[1] = new Rectangle(0, 768, Globals.TileSize, Globals.TileSize);
             xxyy[2] = new Rectangle(256, 192, Globals.TileSize, Globals.TileSize);
@@ -72,7 +74,11 @@ namespace ShootTheDead.Managers
                 }
             }
 
+
+
             DrawMap(spriteBatch, text, xxyy[0], xxyy[1], xxyy[3]);
+
+
 
         }
 

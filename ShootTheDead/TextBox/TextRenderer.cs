@@ -134,7 +134,7 @@
             int start = 0;
             float height = 0.0f;
 
-            batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, transformMatrix: Globals._screenScaleMatrix);
 
             while (true)
             {

@@ -65,7 +65,7 @@ namespace ShootTheDead.States
             float scaleX = (float)Globals._virtualWidth / backgroundTexture.Width;
             float scaleY = (float)Globals._virtualHeight / backgroundTexture.Height;
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals._screenScaleMatrix);
 
             spriteBatch.Draw(backgroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
             foreach (var component in components)
