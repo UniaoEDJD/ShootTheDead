@@ -18,7 +18,7 @@ namespace ShootTheDead
         private Map map = new Map();
         private bool isMoving;
         public int Health { get; private set; } = 5;
-        public bool isDead { get; private set; }
+        public bool isDead { get; set; }
         public List<Bullet> Bullets { get; private set; } = new List<Bullet>();
         public bool isTakingDamage { get; private set; } = false;
         private Texture2D bulletTexture;

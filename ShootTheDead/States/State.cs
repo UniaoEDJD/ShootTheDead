@@ -23,7 +23,7 @@
         public abstract void LoadContent();
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
-
+        
         public abstract void PostUpdate(GameTime gameTime);
         public abstract GameStateType GetStateType();
 

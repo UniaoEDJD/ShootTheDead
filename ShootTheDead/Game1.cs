@@ -57,11 +57,13 @@ namespace ShootTheDead
 
         protected override void Initialize()
         {
+            KeyboardInput.Initialize(this, 500f, 20);
             Debug.WriteLine($"{Globals._virtualHeight} {Globals._virtualWidth}");
             Globals.Bounds = new(Globals.GAME_WIDTH, Globals.GAME_HEIGHT);
             graphics.PreferredBackBufferWidth = Globals.GAME_WIDTH;
             graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.updateScreenScaleMatrix(GraphicsDevice);
             

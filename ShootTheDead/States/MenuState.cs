@@ -2,6 +2,7 @@
 using static System.Net.Mime.MediaTypeNames;
 using System.ComponentModel;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace ShootTheDead.States
 {
@@ -10,6 +11,10 @@ namespace ShootTheDead.States
         private List<Button> components;
 
         private Texture2D menuBackGroundTexture;
+        private TextBox textBox;
+        private SpriteFont font;
+        private Rectangle viewport;
+        ScoreManager scoreManager;
 
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
@@ -50,7 +55,7 @@ namespace ShootTheDead.States
             };
 
         }
-
+        
         public override GameStateType GetStateType()
         {
             return GameStateType.Menu;
@@ -58,8 +63,14 @@ namespace ShootTheDead.States
 
 
         public override void LoadContent()
-        {  
+        {
+            var font = _content.Load<SpriteFont>("Font");
+            ScoreManager.Load();
             menuBackGroundTexture = _content.Load<Texture2D>("Background");
+
+            viewport = new Rectangle(50, 50, 400, 200);
+            textBox = new TextBox(viewport, 200, "This is a test. Move the cursor, select, delete, write...",
+                _graphicsDevice, font, Color.LightGray, Color.DarkGreen, 30);
         }
 
         private void Button_NewGame_Click(object sender, EventArgs e)
@@ -84,6 +95,20 @@ namespace ShootTheDead.States
             components[2].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 100);
             foreach (var component in components)
                 component.Update(gameTime);
+            KeyboardInput.Update();
+
+            float margin = 3;
+            textBox.Area = new Rectangle((int)(viewport.X + margin), viewport.Y, (int)(viewport.Width - margin),
+                viewport.Height);
+            textBox.Renderer.Color = Color.White;
+            textBox.Cursor.Selection = new Color(Color.Purple, .4f);
+
+            float lerpAmount = (float)(gameTime.TotalGameTime.TotalMilliseconds % 500f / 500f);
+            textBox.Cursor.Color = Color.Lerp(Color.DarkGray, Color.LightGray, lerpAmount);
+            Globals.player = textBox.Text.String;
+            Debug.WriteLine($" {Globals.player}");
+            textBox.Active = true;
+            textBox.Update();
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -100,10 +125,10 @@ namespace ShootTheDead.States
 
             // Draw background texture with scaling
             spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
-
+            textBox.Draw(spriteBatch);
             foreach (var component in components)
-                { component.Draw(gameTime, spriteBatch); 
-                  
+                { 
+                component.Draw(gameTime, spriteBatch);  
                 }
                 
             spriteBatch.End();

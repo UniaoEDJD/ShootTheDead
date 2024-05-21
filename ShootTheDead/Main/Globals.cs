@@ -29,6 +29,7 @@ namespace ShootTheDead
         public static int _virtualHeight = 1080;
         public static Viewport _viewport;
         public static Matrix _screenScaleMatrix;
+        public static string player;
 
 
         public static void Update(GameTime gameTime)
