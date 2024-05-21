@@ -1,4 +1,6 @@
-﻿namespace ShootTheDead.Main
+﻿
+
+namespace ShootTheDead.Main
 {
     public class UI
     {
