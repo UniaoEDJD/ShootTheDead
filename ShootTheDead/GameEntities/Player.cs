@@ -88,12 +88,11 @@ namespace ShootTheDead
             }
             if (isDead)
             {
-                //implementar game over/mudanca de cena
+                
             }
 
             if (isMoving)
             {
-                // Atualiza a anima��o se o jogador estiver se movendo
                 base.Update(gameTime);
             }
         }
@@ -106,6 +105,7 @@ namespace ShootTheDead
                 isDead = true;
             }
             Debug.WriteLine("Player Health: " + Health);
+            Debug.WriteLine("Is dead? " + isDead);
         }
 
         public void HandleInput(KeyboardState state,GameTime gameTime)
