@@ -1,6 +1,4 @@
-﻿using ShootTheDead.Managers;
-
-namespace ShootTheDead.Main
+﻿namespace ShootTheDead.Main
 {
     public class Score
     {

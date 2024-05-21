@@ -1,13 +1,4 @@
-﻿using ShootTheDead.Control;
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using ShootTheDead.States;
-using System.Diagnostics;
-
-namespace ShootTheDead.States
+﻿namespace ShootTheDead.States
 {
     public class GameOverState : State
     {

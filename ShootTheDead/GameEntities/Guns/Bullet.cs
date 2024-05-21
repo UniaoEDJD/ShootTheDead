@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace ShootTheDead
+﻿namespace ShootTheDead
 {
     public class Bullet : Sprite
     {
