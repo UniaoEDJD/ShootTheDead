@@ -46,3 +46,14 @@ https://github.com/UniaoEDJD/ShootTheDead/assets/34071970/ddc576e2-9dc7-467b-a95
 
 ### Conclusão
 Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capacidades para futuros trabalhos que possámos vir a realizar no futuro com o uso da framework do Monogame.
+
+
+
+### Bibliografia
+Utilizamos alguns sprites diferentes fornecidos gratuitamente pelos seus criadores para o fim de aprendizagem de Desenvolvimento de jogos
+
+Tilemap: https://www.unrealsoftware.de/files_show.php?file=17758
+
+Gameover: https://wallhere.com/en/wallpaper/1004495
+
+Sprites Jogador e Inimigo: https://opengameart.org/art-search?keys=top+down
