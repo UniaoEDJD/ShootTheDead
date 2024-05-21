@@ -12,6 +12,10 @@ Shoot The Dead é um jogo do estilo de Topdown Shooter que é um jogo endless on
  - S: Andar para trás
  - D: Andar para a direita
  - Botão esquerdo do rato: Disparar
+ - F: Fullscreen
+
+### Motivação
+Foi nos proposto realizar um jogo 2D com o uso da framework Monogame e então decidimos fazer um top down shooter pois é um tipo de jogo que praticamente toda a gente gosta e também as primeiras ideias que surgiram foram sempre relacionadas a um shooter, logo ficou mais fácil decidir o jogo a fazer.
 
 ### Sobre este projeto
 O nosso jogo é um top down shooter tal como dito em cima, onde fizemos a implementação de animações do player e dos inimigos, tal como o movimento autónomo dos inimigos até ao player, implementação de colisões nas bordas do mapa e colisões nos inimigos para quando recebem tiros do player, implementação de som, implementação de menus e de um sistema de scores. 
@@ -39,4 +43,4 @@ O nosso jogo é um top down shooter tal como dito em cima, onde fizemos a implem
 // mete o video aqui
 
 ### Conclusão
-Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capacidades para futuros trabalhos que possámos vir a ter de realizar com o uso da framework do Monogame.
+Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capacidades para futuros trabalhos que possámos vir a realizar no futuro com o uso da framework do Monogame.
