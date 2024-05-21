@@ -51,16 +51,12 @@ namespace ShootTheDead.States
             player = new Player(new Vector2(300, 300), text);
             player.LoadContent(_content);
         }
-
-        public void Restart()
-        {
-            EnemyManager.Reset();
-            player.Reset();
-        }
         
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(transformMatrix: Globals._screenScaleMatrix); // Use a transformação da câmera, se necessário
+
+
             // Desenha o background e o mapa
             mapManager.Draw(spriteBatch);
             // Desenha o jogador
@@ -84,15 +80,14 @@ namespace ShootTheDead.States
             {
                 scoreManager.AddScore(new Main.Score()
                 {
-                    playerName = Globals.player,
+                    playerName = "Player",
                     playerScore = player.score
                 });
-
                 ScoreManager.SaveScore(scoreManager);
                 player.isDead = false;
-                _game.ChangeState(new GameOverState(_game, _graphicsDevice, _content));
-                Restart();
+                _game.ChangeState(new HighscoresState(_game, _graphicsDevice, _content));
             }
+
         }
 
         public override void PostUpdate(GameTime gameTime)
