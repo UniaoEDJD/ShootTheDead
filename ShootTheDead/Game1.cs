@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using ShootTheDead.Managers;
-using ShootTheDead.States;
-using System.Diagnostics;
-using static ShootTheDead.States.State;
-
-namespace ShootTheDead
+﻿namespace ShootTheDead
 {
     public class Game1 : Game
     {

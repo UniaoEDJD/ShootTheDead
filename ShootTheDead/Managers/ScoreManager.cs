@@ -1,7 +1,4 @@
-﻿using ShootTheDead.Main;
-using System.Xml.Serialization;
-
-namespace ShootTheDead.Managers
+﻿namespace ShootTheDead.Managers
 {
     public class ScoreManager
     {

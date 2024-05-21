@@ -1,14 +1,4 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using ShootTheDead.GameEntities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShootTheDead.Managers
+﻿namespace ShootTheDead.Managers
 {
     public static class EnemyManager
     {
