@@ -15,6 +15,7 @@ namespace ShootTheDead.States
         private SpriteFont font;
         private Rectangle viewport;
         ScoreManager scoreManager;
+        SpriteFont fonte;
 
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
@@ -47,15 +48,21 @@ namespace ShootTheDead.States
 
             var resUpButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(Globals._virtualWidth / 2 + 216, Globals._virtualHeight / 2 + 200),
+                Position = new Vector2(Globals._virtualWidth / 2 + 190, Globals._virtualHeight / 2 + 200),
                 Text = "Res +",
             };
+
+            resUpButton.Click += Button_ResUp_Click;
 
             var resDownButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(Globals._virtualWidth / 2 - 384, Globals._virtualHeight / 2 + 200),
                 Text = "Res -",
             };
+
+            resDownButton.Click += Button_ResDown_Click;
+
+
 
             quitGameButton.Click += Button_Quit_Clicked;
 
@@ -69,7 +76,17 @@ namespace ShootTheDead.States
             };
 
         }
-        
+
+        private void Button_ResDown_Click(object sender, EventArgs e)
+        {
+            Globals.scale--;
+        }
+
+        private void Button_ResUp_Click(object sender, EventArgs e)
+        {
+            Globals.scale++;
+        }
+
         public override GameStateType GetStateType()
         {
             return GameStateType.Menu;
@@ -79,6 +96,7 @@ namespace ShootTheDead.States
         public override void LoadContent()
         {
             var font = _content.Load<SpriteFont>("Font");
+            fonte = _content.Load<SpriteFont>("Font");
             ScoreManager.Load();
             menuBackGroundTexture = _content.Load<Texture2D>("Background");
 
@@ -136,6 +154,7 @@ namespace ShootTheDead.States
 
             // Draw background texture with scaling
             spriteBatch.Draw(menuBackGroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
+            spriteBatch.DrawString(fonte, $"{Globals.GAME_WIDTH} x {Globals.GAME_HEIGHT}", new Vector2(Globals._virtualWidth / 2 - 114, Globals._virtualHeight / 2 + 200), Color.White);
             textBox.Draw(spriteBatch);
             foreach (var component in components)
             { 
