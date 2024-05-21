@@ -7,6 +7,7 @@
             Menu,
             Play,
             HighScore,
+            GameOver,
             Pause,
             // Add other states as needed
         }

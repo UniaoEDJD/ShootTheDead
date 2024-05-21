@@ -81,11 +81,12 @@ namespace ShootTheDead.States
                 scoreManager.AddScore(new Main.Score()
                 {
                     playerName = "Player",
-                    playerScore = player.score
+                    playerScore = player.score,
+                    
                 });
-
                 ScoreManager.SaveScore(scoreManager);
             }
+
         }
 
         public override void PostUpdate(GameTime gameTime)
