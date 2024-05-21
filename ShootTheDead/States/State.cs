@@ -6,6 +6,7 @@
         {
             Menu,
             Play,
+            HighScore,
             Pause,
             // Add other states as needed
         }

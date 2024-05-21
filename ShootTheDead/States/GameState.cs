@@ -71,8 +71,6 @@ namespace ShootTheDead.States
             KeyboardState state = Keyboard.GetState();
 
             Globals.Update(gameTime);
-
-
             ui.Update(player.Health, 5);
             var prevPos = player.sPosition;
             player.Update(gameTime);
@@ -87,8 +85,6 @@ namespace ShootTheDead.States
                 });
 
                 ScoreManager.SaveScore(scoreManager);
-
-               
             }
         }
 

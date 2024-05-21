@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using ShootTheDead.Managers;
+using ShootTheDead.States;
 using System.Diagnostics;
 using static ShootTheDead.States.State;
 
@@ -61,8 +63,6 @@ namespace ShootTheDead
             graphics.PreferredBackBufferHeight = Globals.GAME_HEIGHT;
             graphics.ApplyChanges();
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            
             Globals.updateScreenScaleMatrix(GraphicsDevice);
             
             EnemyManager.Init(Content);
@@ -91,8 +91,9 @@ namespace ShootTheDead
             _currentState.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.F))
-            {                 graphics.ToggleFullScreen();
-                       }
+            {                
+                graphics.ToggleFullScreen();        
+            }
 
             base.Update(gameTime);
 
@@ -120,6 +121,9 @@ namespace ShootTheDead
                     Window.AllowUserResizing = true;
                     break;
                 case GameStateType.Play:
+                    Window.AllowUserResizing = true;
+                    break;
+                case GameStateType.HighScore:
                     Window.AllowUserResizing = true;
                     break;
                     // Add other cases as needed

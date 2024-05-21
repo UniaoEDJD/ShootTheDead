@@ -15,7 +15,6 @@ namespace ShootTheDead.States
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
             : base(game, graphicsDevice, content)
         {
-            
             var buttonTexture = _content.Load<Texture2D>("Button");
             var buttonFont = _content.Load<SpriteFont>("Font");
 
@@ -27,9 +26,17 @@ namespace ShootTheDead.States
 
             newGameButton.Click += Button_NewGame_Click;
 
-            var quitGameButton = new Button(buttonTexture, buttonFont)
+            var HighScoreButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(Globals._virtualWidth / 2 - 20, Globals._virtualHeight / 2 + 50),
+                Text = "HighScore",
+            };
+
+            HighScoreButton.Click += Button_HighScore_Click;
+
+            var quitGameButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(Globals._virtualWidth / 2 - 20, Globals._virtualHeight / 2 + 100),
                 Text = "Quit Game",
             };
 
@@ -38,6 +45,7 @@ namespace ShootTheDead.States
             components = new List<Button>()
             {
                 newGameButton,
+                HighScoreButton,
                 quitGameButton,
             };
 
@@ -59,6 +67,11 @@ namespace ShootTheDead.States
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
 
+        private void Button_HighScore_Click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new HighscoresState(_game, _graphicsDevice, _content));
+        }
+
         private void Button_Quit_Clicked(object sender, EventArgs args)
         {
             _game.Exit();
@@ -66,10 +79,9 @@ namespace ShootTheDead.States
 
         public override void Update(GameTime gameTime)
         {
-            components[0].Position.X = Globals._virtualWidth / 2 - 20;
-            components[0].Position.Y = Globals._virtualHeight / 2;
-            components[1].Position.X = Globals._virtualWidth / 2 - 20;
-            components[1].Position.Y = Globals._virtualHeight / 2 + 50;
+            components[0].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2);
+            components[1].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 50);
+            components[2].Position = new Vector2(Globals._virtualWidth / 2 - 100, Globals._virtualHeight / 2 + 100);
             foreach (var component in components)
                 component.Update(gameTime);
         }

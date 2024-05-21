@@ -38,22 +38,22 @@ namespace ShootTheDead.Managers
 
         public static ScoreManager Load()
         {
-            if (!File.Exists(_fileName))
+            try
             {
+                using (var reader = new StreamReader(new FileStream(_fileName, FileMode.Open)))
+                {
+                    var serializer = new XmlSerializer(typeof(List<Score>));
+                    var scores = (List<Score>)serializer.Deserialize(reader);
+                    return new ScoreManager(scores);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                // Se o arquivo não existir, retorna um novo ScoreManager vazio
                 return new ScoreManager(new List<Score>());
             }
+        }
 
-            using (var reader = new StreamReader(new FileStream(_fileName, FileMode.Open)))
-            {
-                var serializer = new XmlSerializer(typeof(List<Score>));
-
-                var scores = (List<Score>)serializer.Deserialize(reader);
-
-                return new ScoreManager(scores);
-            }
-
-        } 
-        
         public static void SaveScore(ScoreManager scoreManager)
         {
             // sobrepoe o arquivo caso exista

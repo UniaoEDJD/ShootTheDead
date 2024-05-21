@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using ShootTheDead.GameEntities;
 using ShootTheDead.Main;
 using System.Diagnostics;
@@ -22,10 +23,12 @@ namespace ShootTheDead
         public bool isTakingDamage { get; private set; } = false;
         private Texture2D bulletTexture;
         private bool isShooting = false;
-        private float cool = 3;
         public int score;
         SoundEffect shoot;
-  
+        Game1 _game;
+        GraphicsDevice _graphicsDevice;
+        ContentManager _content;
+
 
         public Player(Vector2 position, Texture2D tex) : base(position, tex)
         {
@@ -102,17 +105,15 @@ namespace ShootTheDead
             {
                 isDead = true;
             }
-
             Debug.WriteLine("Player Health: " + Health);
         }
-        
+
         public void HandleInput(KeyboardState state,GameTime gameTime)
         {
             isMoving = false;
             
             if (state.IsKeyDown(Keys.W))
             {
-                
                 sPosition.Y -= Speed * Globals.deltaTime;
                 isMoving = true;
             }
