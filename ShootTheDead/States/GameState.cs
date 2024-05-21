@@ -80,7 +80,7 @@ namespace ShootTheDead.States
             {
                 scoreManager.AddScore(new Main.Score()
                 {
-                    playerName = "Player",
+                    playerName = Globals.player,
                     playerScore = player.score
                 });
                 ScoreManager.SaveScore(scoreManager);

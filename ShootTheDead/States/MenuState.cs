@@ -45,6 +45,18 @@ namespace ShootTheDead.States
                 Text = "Quit Game",
             };
 
+            var resUpButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(Globals._virtualWidth / 2 + 216, Globals._virtualHeight / 2 + 200),
+                Text = "Res +",
+            };
+
+            var resDownButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(Globals._virtualWidth / 2 - 384, Globals._virtualHeight / 2 + 200),
+                Text = "Res -",
+            };
+
             quitGameButton.Click += Button_Quit_Clicked;
 
             components = new List<Button>()
@@ -52,6 +64,8 @@ namespace ShootTheDead.States
                 newGameButton,
                 HighScoreButton,
                 quitGameButton,
+                resUpButton,
+                resDownButton,
             };
 
         }
