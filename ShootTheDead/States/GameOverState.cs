@@ -31,7 +31,7 @@ namespace ShootTheDead.States
             // Inicializar os botões com posição centralizada horizontalmente
             var restartButton = new Button(buttonTexture, font)
             {
-                Position = new Vector2(centerX - buttonTexture.Width / 2, Globals._virtualHeight / 2),
+                Position = new Vector2(centerX - buttonTexture.Width / 2, Globals._virtualHeight / 2 - 300),
                 Text = "Restart",
             };
             restartButton.Click += RestartButton_Click;
@@ -70,8 +70,6 @@ namespace ShootTheDead.States
             spriteBatch.Draw(backgroundTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(scaleX, scaleY), SpriteEffects.None, 0f);
             foreach (var component in components)
                 component.Draw(gameTime, spriteBatch);
-
-            spriteBatch.DrawString(font, "Game Over", new Vector2(800, 100), Color.Red);
 
             spriteBatch.End();
         }
