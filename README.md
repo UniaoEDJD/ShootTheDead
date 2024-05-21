@@ -49,11 +49,11 @@ Com a conclusão deste projeto conseguimos adquirir bastante conhecimento e capa
 
 
 
-### Bibliografia
+## Bibliografia
 Utilizamos alguns sprites diferentes fornecidos gratuitamente pelos seus criadores para o fim de aprendizagem de Desenvolvimento de jogos
 
-Tilemap: https://www.unrealsoftware.de/files_show.php?file=17758
+- Tilemap: https://www.unrealsoftware.de/files_show.php?file=17758
 
-Gameover: https://wallhere.com/en/wallpaper/1004495
+- Gameover: https://wallhere.com/en/wallpaper/1004495
 
-Sprites Jogador e Inimigo: https://opengameart.org/art-search?keys=top+down
+- Sprites Jogador e Inimigo: https://opengameart.org/art-search?keys=top+down
